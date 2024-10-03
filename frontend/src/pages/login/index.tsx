@@ -54,7 +54,9 @@ export default function Login() {
                 <span className="label-text text-black px-3">Remember me</span>
               </label>
             </div>
-            <button className="btn bg-[#1C532A] w-[75%]">Login</button>
+            <button className="btn bg-[#1C532A] w-[75%] hover:bg-[#247538] text-white">
+              Login
+            </button>
           </div>
         </div>
       </div>
