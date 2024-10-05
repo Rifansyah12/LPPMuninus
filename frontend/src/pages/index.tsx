@@ -1,10 +1,9 @@
 // Import necessary dependencies
-// Import necessary dependencies
 import Image from "next/image";
 import { Poppins } from "next/font/google";
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router"; // Ganti useNavigate dengan useRouter
+import { useRouter } from "next/router";
 import axios, { AxiosError } from "axios"; // Impor AxiosError
 
 // Initialize Poppins font with required properties
@@ -17,12 +16,12 @@ const Login = () => {
   const [NIDN, setNIDN] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const router = useRouter(); // Gunakan useRouter
+  const router = useRouter();
 
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => setMessage(""), 3000);
-      return () => clearTimeout(timer); // Clear timeout
+      return () => clearTimeout(timer);
     }
   }, [message]); // Dependency array
 
@@ -44,11 +43,11 @@ const Login = () => {
 
       setMessage("Login Successfully");
       setTimeout(() => {
-        router.push("/main"); // Ganti navigate dengan router.push()
-      }, 2000); // Redirect after 2 seconds
+        router.push("/main");
+      }, 2000);
       console.log(response.data);
     } catch (error) {
-      const axiosError = error as AxiosError; // Cast error to AxiosError
+      const axiosError = error as AxiosError;
       setMessage(axiosError.response?.data?.error || "Login failed");
     }
   };
