@@ -1,12 +1,7 @@
 import Image from "next/image";
-import { Poppins } from "next/font/google";
 import Head from "next/head";
 
 // Ini adalah module scope
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
 
 export default function Login() {
   return (
@@ -15,7 +10,7 @@ export default function Login() {
         <title>Login</title>
       </Head>
       <div
-        className={`${poppins.className} w-full min-h-screen flex bg-[url('/bg-login.png')] bg-cover bg-center sm:py-0 lg:py-5 md:items-center md:justify-center `}
+        className={`w-full min-h-screen flex bg-[url('/all-uninus.jpg')] bg-cover bg-center sm:py-0 lg:py-5 md:items-center md:justify-center `}
       >
         <div className="bg-[rgba(224,224,224,0.5)] p-5 w-full my-auto md:w-[480px] md:my-0">
           <div className="bg-[#1C532A] py-7">

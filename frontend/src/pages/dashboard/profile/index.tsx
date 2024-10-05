@@ -1,21 +1,10 @@
-import ListMenu from "@/components/ListMenu";
+import HeadDashboard from "@/components/HeadDashboard";
+import Sidebar from "@/components/Sidebar";
 import Head from "next/head";
 import { useState } from "react";
 
 export default function Profile() {
-  const [searchValue, setSearchValue] = useState("");
-
-  // Fungsi untuk menangani klik dan enter
-  const handleSearch = () => {
-    console.log(searchValue); // Menampilkan nilai input di console
-  };
-
-  // Fungsi untuk menangani tombol "Enter"
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      handleSearch();
-    }
-  };
+  const [activeMenu, setActiveMenu] = useState("Identitas Diri"); 
   return (
     <div className="">
       <Head>
@@ -27,77 +16,15 @@ export default function Profile() {
       </Head>
       <div className="flex w-full bg-primary text-black">
         {/* Side Bar Start */}
-        <div className="w-[17rem] bg-[#1C532A] block text-[#FFFFFF]">
-          <div className="shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] pt-4 pb-2 text-center">
-            <h1 className="text-2xl font-semibold">SIMPPM</h1>
-            <h2 className="text-sm font-semibold">
-              Universitas Islam Nusantara
-            </h2>
-          </div>
-          <h2 className="text-center text-lg font-semibold py-5">
-            Rekapitulasi SIMPPM
-          </h2>
-          <h3 className="pl-4 text-base font-semibold">MENU</h3>
-          <div className="shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] my-5">
-            <div className="">
-              <ListMenu text="Profile" icon="/icon/profile.png" active={true} />
-              <ListMenu text="Usulan" icon="/icon/usulan.png" />
-              <ListMenu text="Tahapan" icon="/icon/tahapan.png" />
-              <ListMenu text="Hasil" icon="/icon/hasil.png" />
-              <ListMenu text="Statistik" icon="/icon/piechart.png" />
-              <ListMenu text="Reviewer" icon="/icon/review.png" />
-            </div>
-          </div>
-          <h3 className="pl-4 text-base font-semibold">USER</h3>
-          <div className="">
-            <div className="">
-              <ListMenu text="Dashboard" icon="/icon/dashboard.png" />
-              <ListMenu text="Rekap Pengusulan" icon="/icon/summary.svg" />
-              <ListMenu text="Ajuan Anggota" icon="/icon/group.svg" />
-            </div>
-          </div>
-        </div>
+        <Sidebar />
         {/* Side Bar End */}
 
         {/* Content Start */}
 
         <div className="w-full">
-          <div className="h-[130px] py-[1.5rem] px-7 bg-white text-black shadow-md">
-            <div className="flex justify-between  items-center ">
-              <h1 className="text-3xl text-[#1C532A] text-shadow font-semibold">
-                Dashboard
-              </h1>
-              <div className="flex items-center gap-4">
-                <button className="btn btn-ghost">
-                  <span className="material-symbols-outlined">
-                    notifications
-                  </span>
-                </button>
-                <div className="flex items-center">
-                  <input
-                    type="text"
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    onKeyDown={handleKeyDown} // Event handler untuk tombol "Enter"
-                    className="h-[35px] bg-[#F4F6F9] text-[#000000] outline-none border-none px-2"
-                    placeholder="Search..."
-                  />
-                  <span
-                    className="material-symbols-outlined bg-[#F4F6F9] text-[35px] cursor-pointer"
-                    onClick={handleSearch} // Event handler untuk klik ikon
-                  >
-                    search
-                  </span>
-                </div>
-                <div className="btn btn-ghost">
-                  <span className="material-symbols-outlined">settings</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-[80%] -mt-[2.5rem] mx-auto pl-[3.5rem] flex bg-[#FFCC00] text-white h-[98px] items-center shadow-md">
-            <h2 className="text-2xl font-semibold">Profile</h2>
-          </div>
+          {/* Header Dashboard Start */}
+          <HeadDashboard title="Profile" />
+          {/* Header Dashboard End */}
 
           {/* Head Profile Dashboard Start */}
           <div className="w-full py-7 flex justify-center items-center flex-col bg-white shadow-md mt-[3rem] text-primary">
@@ -112,11 +39,149 @@ export default function Profile() {
           {/* Head Profile Dashboard End */}
 
           {/* Head Dashboard End */}
-          <div className=""></div>
-        </div>
+          <div className="flex flex-col">
+            <div className="flex w-full justify-between mt-5 gap-2 px-5">
+              <ProfileMenu
+                active={activeMenu === "Identitas Diri"}
+                title="Identitas Diri"
+                icon="account_circle"
+                onClick={() => setActiveMenu("Identitas Diri")} // Set menu aktif
+              />
+              <ProfileMenu
+                active={activeMenu === "Riwayat Pendidikan"}
+                title="Riwayat Pendidikan"
+                icon="school"
+                onClick={() => setActiveMenu("Riwayat Pendidikan")} // Set menu aktif
+              />
+              <ProfileMenu
+                active={activeMenu === "Riwayat Penelitian"}
+                title="Riwayat Penelitian"
+                icon="history_edu"
+                onClick={() => setActiveMenu("Riwayat Penelitian")} // Set menu aktif
+              />
+              <ProfileMenu
+                active={activeMenu === "Riwayat Pengabdian"}
+                title="Riwayat Pengabdian"
+                icon="groups"
+                onClick={() => setActiveMenu("Riwayat Pengabdian")} // Set menu aktif
+              />
+              <ProfileMenu
+                active={activeMenu === "Data Baru"}
+                title="Data Baru"
+                icon="note_stack"
+                onClick={() => setActiveMenu("Data Baru")} // Set menu aktif
+              />
+            </div>
 
+            {/* Conditional rendering untuk form yang aktif */}
+            {activeMenu === "Identitas Diri" && <FormProfile />}
+            {activeMenu === "Riwayat Pendidikan" && <EducationHistory />}
+            {/* Tambahkan komponen lain jika diperlukan */}
+          </div>
+        <div className="w-full text-center bg-white mt-5 py-2">
+          <p>Copyright 2024 © LPPM Universitas Islam Nusantara </p>
+        </div>
+        </div>
         {/* Content End */}
       </div>
+    </div>
+  );
+}
+
+const ProfileMenu = ({
+  active = false,
+  title,
+  icon,
+  onClick,
+}: {
+  active?: boolean;
+  title: string;
+  icon: string;
+  onClick: () => void; // Tambahkan onClick sebagai prop
+}) => {
+  return (
+    <div
+      onClick={onClick} // Panggil onClick ketika diklik
+      className={` ${
+        active ? "bg-white cursor-default" : "bg-[#D9D9D9] hover:bg-white"
+      } flex items-center justify-center flex-col w-[178px] h-[84px] shadow-lg text-primary rounded-xl cursor-pointer `}
+    >
+      <span className="material-symbols-outlined">{icon}</span>
+      <p>{title}</p>
+    </div>
+  );
+};
+
+const InputForm = ({
+  label,
+  type,
+  name,
+}: {
+  label: string;
+  type: string;
+  name: string;
+}) => {
+  return (
+    <div className="flex justify-between items-center gap-[6rem]">
+      <label htmlFor={name} className="label text-lg min-w-[6.5rem] inline">
+        {label}
+      </label>
+      <input
+        id={name}
+        type={type}
+        name={name}
+        className="input bg-[#D9D9D9] text-black min-w-[70%]"
+      />
+    </div>
+  );
+};
+
+const FormProfile = () => {
+  return (
+    <form
+      action=""
+      className="flex w-full bg-white -mt-2 px-7 py-[5rem] gap-[7rem] items-center justify-center"
+    >
+      <div className="flex justify-center flex-col items-center gap-7">
+        <span className="material-symbols-outlined text-[4rem]">
+          account_circle
+        </span>
+        <button className="btn bg-[#1C532A] text-white">Upload Foto</button>
+      </div>
+      <div className="flex justify-center flex-col gap-3">
+        <InputForm label="Nama Lengkap" type="text" name="fullname" />
+        <InputForm label="Alamat" type="text" name="address" />
+        <div className="flex justify-between items-center gap-[6rem]">
+          <label htmlFor="sex" className="label text-lg min-w-[6.5rem] inline">
+            Jenis Kelamin
+          </label>
+          <select
+            id="sex"
+            name="sex"
+            className="select select-bordered bg-[#D9D9D9] text-black min-w-[70%]"
+          >
+            <option disabled selected>
+              Jenis Kelamin
+            </option>
+            <option value={"laki-laki"}>Laki-laki</option>
+            <option value={"perempuan"}>Perempuan</option>
+          </select>
+        </div>
+        <InputForm label="Tempat Lahir" type="text" name="place_birth" />
+        <InputForm label="Tanggal Lahir" type="date" name="date_birth" />
+        <button className="btn bg-[#1C532A] text-white -ml-[5rem] mt-6">
+          Simpan
+        </button>
+      </div>
+    </form>
+  );
+}
+
+const EducationHistory = () => {
+  return (
+    <div className="flex w-full bg-white -mt-2 px-7 py-[5rem] gap-[7rem] items-center justify-center">
+      <h1>Ini bagian education history</h1>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam molestiae adipisci alias vel neque corporis beatae quod quasi a totam natus repudiandae mollitia expedita id repellendus reprehenderit velit, quaerat exercitationem?</p>
     </div>
   );
 }
