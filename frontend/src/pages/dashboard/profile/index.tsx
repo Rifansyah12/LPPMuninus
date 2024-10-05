@@ -1,16 +1,31 @@
 import ListMenu from "@/components/ListMenu";
 import Head from "next/head";
+import { useState } from "react";
 
 export default function Profile() {
+  const [searchValue, setSearchValue] = useState("");
+
+  // Fungsi untuk menangani klik dan enter
+  const handleSearch = () => {
+    console.log(searchValue); // Menampilkan nilai input di console
+  };
+
+  // Fungsi untuk menangani tombol "Enter"
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
   return (
     <div className="">
       <Head>
+        <title>Dasboard - profile</title>
         <link
           rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         />
       </Head>
-      <div className="flex w-full">
+      <div className="flex w-full bg-white text-black">
         {/* Side Bar Start */}
         <div className="w-[17rem] bg-[#1C532A] block text-[#FFFFFF]">
           <div className="shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] pt-4 pb-2 text-center">
@@ -45,7 +60,44 @@ export default function Profile() {
         {/* Side Bar End */}
 
         {/* Content Start */}
-        <div className=""></div>
+        <div className="w-full">
+          <div className="h-[130px] py-[1.5rem] px-7 bg-white text-black shadow-md">
+            <div className="flex justify-between  items-center ">
+              <h1 className="text-3xl text-[#1C532A] text-shadow font-semibold">
+                Dashboard
+              </h1>
+              <div className="flex items-center gap-4">
+                <button className="btn btn-ghost">
+                  <span className="material-symbols-outlined">
+                    notifications
+                  </span>
+                </button>
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    onKeyDown={handleKeyDown} // Event handler untuk tombol "Enter"
+                    className="h-[35px] bg-[#F4F6F9] text-[#000000] outline-none border-none px-2"
+                    placeholder="Search..."
+                  />
+                  <span
+                    className="material-symbols-outlined bg-[#F4F6F9] text-[35px] cursor-pointer"
+                    onClick={handleSearch} // Event handler untuk klik ikon
+                  >
+                    search
+                  </span>
+                </div>
+                <div className="btn btn-ghost">
+                  <span className="material-symbols-outlined">settings</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-[80%] -mt-[2.5rem] mx-auto pl-[3.5rem] flex bg-[#FFCC00] text-white h-[98px] items-center shadow-md">
+            <h2 className="text-2xl font-semibold">Profile</h2>
+          </div>
+        </div>
         {/* Content End */}
       </div>
     </div>
