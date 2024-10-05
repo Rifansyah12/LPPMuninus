@@ -1,104 +1,120 @@
+// Import necessary dependencies
+// Import necessary dependencies
 import Image from "next/image";
+import { Poppins } from "next/font/google";
+import Head from "next/head";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router"; // Ganti useNavigate dengan useRouter
+import axios, { AxiosError } from "axios"; // Impor AxiosError
 
-export default function Home() {
+// Initialize Poppins font with required properties
+const poppins = Poppins({
+  weight: ["100", "400", "700"], // Add your desired weights
+  subsets: ["latin"],
+});
+
+const Login = () => {
+  const [NIDN, setNIDN] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const router = useRouter(); // Gunakan useRouter
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 3000);
+      return () => clearTimeout(timer); // Clear timeout
+    }
+  }, [message]); // Dependency array
+
+  // Specify the type for event parameter
+  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/login",
+        {
+          NIDN,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      setMessage("Login Successfully");
+      setTimeout(() => {
+        router.push("/main"); // Ganti navigate dengan router.push()
+      }, 2000); // Redirect after 2 seconds
+      console.log(response.data);
+    } catch (error) {
+      const axiosError = error as AxiosError; // Cast error to AxiosError
+      setMessage(axiosError.response?.data?.error || "Login failed");
+    }
+  };
+
   return (
-    <div
-      className={` grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div>
+      <Head>
+        <title>Login</title>
+      </Head>
+      <div
+        className={`${poppins.className} w-full min-h-screen flex bg-[url('/bg-login.png')] bg-cover bg-center sm:py-0 lg:py-5 md:items-center md:justify-center`}
+      >
+        <div className="bg-[rgba(224,224,224,0.5)] p-5 w-full my-auto md:w-[480px] md:my-0">
+          <div className="bg-[#1C532A] py-7">
             <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src={"/logo-LPPM.png"}
+              alt={"LPPM"}
+              width={477}
+              height={136}
+              className="mx-auto"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <h1 className="text-center text-sm font-semibold text-white">
+              SELAMAT DATANG DI <br /> SIMPPM{" "}
+            </h1>
+            <h2 className="text-center text-sm font-normal text-white">
+              Sistem Informasi Manajemen Penelitian dan Pengabdian Kepada
+              Masyarakat
+            </h2>
+            <h2 className="text-center text-sm font-semibold text-white">
+              UNIVERSITAS ISLAM NUSANTARA
+            </h2>
+          </div>
+          <div className="bg-[#E0E0E0E0] opacity-90 py-7 flex justify-center items-center flex-col gap-7">
+            <input
+              type="text"
+              placeholder="NIP / NIDN"
+              className="input w-full max-w-xs bg-white text-black"
+              value={NIDN}
+              onChange={(e) => setNIDN(e.target.value)} // Capture NIDN input
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="input w-full max-w-xs bg-white text-black"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} // Capture Password input
+            />
+            <div className="form-control md:self-start md:ml-14">
+              <label className="label cursor-pointer">
+                <input type="checkbox" className="checkbox bg-white" />
+                <span className="label-text text-black px-3">Remember me</span>
+              </label>
+            </div>
+            <button
+              className="btn bg-[#1C532A] w-[75%] hover:bg-[#247538] text-white"
+              onClick={handleLogin} // Call handleLogin on button click
+            >
+              Login
+            </button>
+          </div>
+          {message && <p className="text-red-500 text-center">{message}</p>}{" "}
+          {/* Display error message */}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
-
   );
-}
+};
+
+export default Login;
