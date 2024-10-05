@@ -3,7 +3,7 @@ export default function Navbar() {
   return (
     <div className="navbar bg-[#1C532A] text-white">
       <div className="navbar-start">
-        <a className="font-bold text-2xl text-[#FFFFFF] ">SIMPPM UNINUS</a>
+        <a className="font-bold text-xl text-[#FFFFFF] inline">SIMPPM UNINUS</a>
       </div>
       <div className="navbar-center hidden sm:hidden lg:block">
         <ul className="menu menu-horizontal px-1 text-lg font-medium">
