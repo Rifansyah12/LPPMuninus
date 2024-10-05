@@ -25,7 +25,7 @@ export default function Profile() {
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         />
       </Head>
-      <div className="flex w-full bg-white text-black">
+      <div className="flex w-full bg-primary text-black">
         {/* Side Bar Start */}
         <div className="w-[17rem] bg-[#1C532A] block text-[#FFFFFF]">
           <div className="shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] pt-4 pb-2 text-center">
@@ -60,6 +60,7 @@ export default function Profile() {
         {/* Side Bar End */}
 
         {/* Content Start */}
+
         <div className="w-full">
           <div className="h-[130px] py-[1.5rem] px-7 bg-white text-black shadow-md">
             <div className="flex justify-between  items-center ">
@@ -97,7 +98,23 @@ export default function Profile() {
           <div className="w-[80%] -mt-[2.5rem] mx-auto pl-[3.5rem] flex bg-[#FFCC00] text-white h-[98px] items-center shadow-md">
             <h2 className="text-2xl font-semibold">Profile</h2>
           </div>
+
+          {/* Head Profile Dashboard Start */}
+          <div className="w-full py-7 flex justify-center items-center flex-col bg-white shadow-md mt-[3rem] text-primary">
+            <span className="material-symbols-outlined text-[10rem]">
+              account_circle
+            </span>
+            <h2 className="text-2xl font-semibold">Nama Disisni</h2>
+            <p className="text-2xl font-semibold">
+              Lorem ipsum sit amet dolor consectetur adipiscing elit
+            </p>
+          </div>
+          {/* Head Profile Dashboard End */}
+
+          {/* Head Dashboard End */}
+          <div className=""></div>
         </div>
+
         {/* Content End */}
       </div>
     </div>
