@@ -28,9 +28,9 @@ export default function Main() {
         </div>
 
         <div className="flex justify-center items-center flex-wrap gap-4 my-[4rem]">
-          <CardHome />
+          <CardHome backgroundColor="#1C532A" />
           <CardHome backgroundColor="#FFCC00" img="/humans.png" />
-          <CardHome backgroundColor="#1E73BE" img="/box.png" />
+          <CardHome backgroundColor="#015bab" blue={true} img="/box.png" />
         </div>
 
         <footer>
