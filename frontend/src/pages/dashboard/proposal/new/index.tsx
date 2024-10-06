@@ -2,7 +2,7 @@ import WrapperDashboard from "@/components/WrapperDashboard";
 
 export default function NewProposal() {
   return (
-    <WrapperDashboard title="Usulan Baru">
+    <WrapperDashboard title="Usulan Baru" menu="usulan-new">
       <div className="w-full p-7 text-center text-primary mt-7 bg-white">
         <h2 className="text-2xl font-bold mb-5">Identitas Pengusulan</h2>
         <form action="" className="">

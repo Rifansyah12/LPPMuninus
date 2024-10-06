@@ -33,7 +33,7 @@ export default function Profile() {
       </Head>
       <div className="flex w-full bg-primary text-black">
         {/* Side Bar Start */}
-        {!isMobile && <Sidebar />}
+        {!isMobile && <Sidebar menu='profile' />}
         {/* Side Bar End */}
 
         {/* Content Start */}

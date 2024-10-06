@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type ListMenuProps = {
   text: string;
   icon: string;
+  href: string | object;
   active?: boolean;
   filterIcon?: boolean;
 };
@@ -12,8 +14,10 @@ export default function ListMenu({
   icon,
   active = false,
   filterIcon = false,
+  href
 }: ListMenuProps) {
   return (
+    <Link href={href}>
     <div
       className={`${
         active ? "bg-white text-[#1C532A]" : " bg-[#1C532A] text-white"
@@ -28,5 +32,6 @@ export default function ListMenu({
       />
       <p className=" font-semibold text-lg">{text}</p>
     </div>
+    </Link>
   );
 }
