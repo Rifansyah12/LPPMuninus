@@ -66,7 +66,33 @@ class AuthController extends Controller
     ], 404);
 }
 
-// 
-    
-    
+  // Fungsi untuk menyimpan usulan proposal
+  public function submitProposal(Request $request)
+  {
+      // Validasi input
+      $request->validate([
+          'NIDN' => 'required|string|exists:db_dosen,NIDN',
+          'jenis_proposal' => 'required|string',
+          'kode_skim' => 'required|string',
+          'nama_skim' => 'required|string',
+          'sumber_dana' => 'required|numeric',
+      ]);
+  
+      // Simpan proposal ke database
+      $proposal = Proposal::create([
+          'NIDN' => $request->NIDN,
+          'jenis_proposal' => $request->jenis_proposal,
+          'kode_skim' => $request->kode_skim,
+          'nama_skim' => $request->nama_skim,
+          'sumber_dana' => $request->sumber_dana,
+      ]);
+  
+      return response()->json([
+          'message' => 'Proposal berhasil diajukan',
+          'proposal' => $proposal
+      ], 201);
+  }
 }
+    
+    
+

@@ -16,7 +16,7 @@ class CreateTableDbDosen extends Migration
         Schema::create('db_dosen', function (Blueprint $table) {
             $table->increments('id'); 
             $table->string('nama_lengkap', 100);
-            $table->string('NIDN', 10);
+            $table->string('NIDN', 10)->unique();
             $table->string('prodi', 100);
             $table->string('jabatan', 100)->nullable();
             $table->string('email', 100);

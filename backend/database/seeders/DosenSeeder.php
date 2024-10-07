@@ -15,39 +15,16 @@ class DosenSeeder extends Seeder
     {
         DB::table('db_dosen')->insert([
             [
-                'nama_lengkap' => 'Rifan',
-                'NIDN' => '1234567890',
+                'nama_lengkap' => 'Rifansyah',
+                'NIDN' => '123456789',
                 'prodi' => 'Ilmu Komputer',
                 'jabatan' => 'Dosen',
                 'email' => 'syahr9610@gmail.com',
                 'kontak' => '081234567890',
-                'password' =>   Hash::make('password123'),
+                'password' =>   Hash::make('Rifansyah'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
-            [
-                'nama_lengkap' => 'Andi',
-                'NIDN' => '0987654321',
-                'prodi' => 'Sistem Informasi',
-                'jabatan' => 'Dosen',
-                'email' => 'andi@gmail.com',
-                'kontak' => '082234567890',
-                'password' => Hash::make ('password123'),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'nama_lengkap' => 'inal',
-                'NIDN' => '0987654321',
-                'prodi' => 'Sistem Informasi',
-                'jabatan' => 'Dosen',
-                'email' => 'inal@gmail.com',
-                'kontak' => '082234567890',
-                'password' => Hash::make ('password123'),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-
 
             
         ]);
