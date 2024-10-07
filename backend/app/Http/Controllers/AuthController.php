@@ -52,5 +52,24 @@ class AuthController extends Controller
         return response()->json(['message' => 'NIDN atau password salah'], 401);
     }
     
+
+    // functon untuk mengambil data dosen susuai dengan NIDN
+    public function getDosenDetail($NIDN)
+{
+    $dosen = Dosen::where('NIDN', $NIDN)->first();
+    if ($dosen) {
+        return response()->json([
+            'message' => 'Detail dosen ditemukan',
+            'dosen' => $dosen,
+        ], 200);
+    }
+
+    return response()->json([
+        'message' => 'Dosen tidak ditemukan',
+    ], 404);
+}
+
+// 
+    
     
 }
