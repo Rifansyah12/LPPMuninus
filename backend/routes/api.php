@@ -21,4 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+Route::get('/profile', [UserController::class, 'getProfile'])->middleware('auth');
 Route::post('/dosen/{NIDN}', [AuthController::class, 'getDosenDetail']);
+

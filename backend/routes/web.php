@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('login-v2');
 });
+Route::get('/profil', [UserController::class, 'showProfile'])->name('user.profile');
