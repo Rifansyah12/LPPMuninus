@@ -1,10 +1,27 @@
 import HeadDashboard from "@/components/HeadDashboard";
 import Sidebar from "@/components/Sidebar";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Profile() {
-  const [activeMenu, setActiveMenu] = useState("Identitas Diri"); 
+   const [isMobile, setIsMobile] = useState(false);
+  const [activeMenu, setActiveMenu] = useState("Identitas Diri");
+   useEffect(() => {
+     const handleResize = () => {
+       setIsMobile(window.innerWidth < 768); // Ukuran 768px sesuai dengan breakpoint mobile
+     };
+
+     // Jalankan pertama kali untuk mengecek ukuran awal
+     handleResize();
+
+     // Dengarkan setiap kali ukuran berubah
+     window.addEventListener("resize", handleResize);
+
+     return () => {
+       window.removeEventListener("resize", handleResize);
+     };
+   }, []);
+ 
   return (
     <div className="">
       <Head>
@@ -16,7 +33,7 @@ export default function Profile() {
       </Head>
       <div className="flex w-full bg-primary text-black">
         {/* Side Bar Start */}
-        <Sidebar />
+        {!isMobile && <Sidebar menu='profile' />}
         {/* Side Bar End */}
 
         {/* Content Start */}
@@ -27,12 +44,14 @@ export default function Profile() {
           {/* Header Dashboard End */}
 
           {/* Head Profile Dashboard Start */}
-          <div className="w-full py-7 flex justify-center items-center flex-col bg-white shadow-md mt-[3rem] text-primary">
+          <div className="w-full py-7 flex justify-center items-center flex-col bg-white shadow-md lg:mt-[3rem] mt-[2rem] text-primary">
             <span className="material-symbols-outlined text-[10rem]">
               account_circle
             </span>
-            <h2 className="text-2xl font-semibold">Nama Disisni</h2>
-            <p className="text-2xl font-semibold">
+            <h2 className="lg:text-2xl font-semibold text-center">
+              Nama Disini
+            </h2>
+            <p className="lg:text-2xl font-semibold text-center">
               Lorem ipsum sit amet dolor consectetur adipiscing elit
             </p>
           </div>
@@ -40,7 +59,7 @@ export default function Profile() {
 
           {/* Head Dashboard End */}
           <div className="flex flex-col">
-            <div className="flex w-full justify-between mt-5 gap-2 px-5">
+            <div className="flex w-full justify-center lg:justify-between mt-5 lg:gap-2 gap-5 lg:px-5 px-2">
               <ProfileMenu
                 active={activeMenu === "Identitas Diri"}
                 title="Identitas Diri"
@@ -78,9 +97,9 @@ export default function Profile() {
             {activeMenu === "Riwayat Pendidikan" && <EducationHistory />}
             {/* Tambahkan komponen lain jika diperlukan */}
           </div>
-        <div className="w-full text-center bg-white mt-5 py-2">
-          <p>Copyright 2024 © LPPM Universitas Islam Nusantara </p>
-        </div>
+          <div className="w-full text-center bg-white mt-5 py-2">
+            <p>Copyright 2024 © LPPM Universitas Islam Nusantara </p>
+          </div>
         </div>
         {/* Content End */}
       </div>
@@ -104,10 +123,10 @@ const ProfileMenu = ({
       onClick={onClick} // Panggil onClick ketika diklik
       className={` ${
         active ? "bg-white cursor-default" : "bg-[#D9D9D9] hover:bg-white"
-      } flex items-center justify-center flex-col w-[178px] h-[84px] shadow-lg text-primary rounded-xl cursor-pointer `}
+      } flex items-center justify-center flex-col lg:w-[178px] w-[4rem]  lg:h-[84px] shadow-lg text-primary rounded-xl cursor-pointer py-1 px-2`}
     >
-      <span className="material-symbols-outlined">{icon}</span>
-      <p>{title}</p>
+      <span className="material-symbols-outlined text-">{icon}</span>
+      <p className="lg:text-lg text-xs text-center">{title}</p>
     </div>
   );
 };
@@ -122,7 +141,7 @@ const InputForm = ({
   name: string;
 }) => {
   return (
-    <div className="flex justify-between items-center gap-[6rem]">
+    <div className="flex lg:justify-between items-center lg:gap-[6rem]">
       <label htmlFor={name} className="label text-lg min-w-[6.5rem] inline">
         {label}
       </label>
@@ -140,7 +159,7 @@ const FormProfile = () => {
   return (
     <form
       action=""
-      className="flex w-full bg-white -mt-2 px-7 py-[5rem] gap-[7rem] items-center justify-center"
+      className="flex flex-col lg:flex-row w-full bg-white -mt-2 px-7 py-[5rem] gap-[7rem] items-center justify-center"
     >
       <div className="flex justify-center flex-col items-center gap-7">
         <span className="material-symbols-outlined text-[4rem]">
@@ -151,7 +170,7 @@ const FormProfile = () => {
       <div className="flex justify-center flex-col gap-3">
         <InputForm label="Nama Lengkap" type="text" name="fullname" />
         <InputForm label="Alamat" type="text" name="address" />
-        <div className="flex justify-between items-center gap-[6rem]">
+        <div className="flex lg:justify-between items-center lg:gap-[6rem]">
           <label htmlFor="sex" className="label text-lg min-w-[6.5rem] inline">
             Jenis Kelamin
           </label>
@@ -169,7 +188,7 @@ const FormProfile = () => {
         </div>
         <InputForm label="Tempat Lahir" type="text" name="place_birth" />
         <InputForm label="Tanggal Lahir" type="date" name="date_birth" />
-        <button className="btn bg-[#1C532A] text-white -ml-[5rem] mt-6">
+        <button className="btn bg-[#1C532A] text-white lg:-ml-[5rem] mt-6">
           Simpan
         </button>
       </div>
