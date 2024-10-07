@@ -1,11 +1,16 @@
 <?php
+namespace Database\Seeders;
+
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 
 class DosenSeeder extends Seeder
 {
+
+    
     public function run()
     {
         DB::table('db_dosen')->insert([
@@ -16,7 +21,7 @@ class DosenSeeder extends Seeder
                 'jabatan' => 'Dosen',
                 'email' => 'syahr9610@gmail.com',
                 'kontak' => '081234567890',
-                'password' => bcrypt('password'),
+                'password' =>   Hash::make('password123'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
@@ -27,10 +32,24 @@ class DosenSeeder extends Seeder
                 'jabatan' => 'Dosen',
                 'email' => 'andi@gmail.com',
                 'kontak' => '082234567890',
-                'password' => bcrypt('password123'),
+                'password' => Hash::make ('password123'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
+            [
+                'nama_lengkap' => 'inal',
+                'NIDN' => '0987654321',
+                'prodi' => 'Sistem Informasi',
+                'jabatan' => 'Dosen',
+                'email' => 'inal@gmail.com',
+                'kontak' => '082234567890',
+                'password' => Hash::make ('password123'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+
+
+            
         ]);
     }
 };
