@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateTableDbDosen extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('table_db_dosen', function (Blueprint $table) {
-            $table->id();
+        Schema::create('db_dosen', function (Blueprint $table) {
+            $table->increments('id'); 
+            $table->string('nama_lengkap', 100);
+            $table->string('NIDN', 10)->unique();
+            $table->string('prodi', 100);
+            $table->string('jabatan', 100)->nullable();
+            $table->string('email', 100);
+            $table->string('kontak', 15)->nullable();
             $table->timestamps();
+            $table->string('password', 255);
         });
     }
 
@@ -26,6 +33,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_db_dosen');
+        Schema::dropIfExists('db_dosen');
     }
+
 };

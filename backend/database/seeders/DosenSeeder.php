@@ -1,39 +1,34 @@
 <?php
-
 namespace Database\Seeders;
 
+
 use Illuminate\Database\Seeder;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
 
 class DosenSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+
+    
     public function run()
     {
         DB::table('db_dosen')->insert([
             [
-                'nama_lengkap' => 'Rifan',
+                'nama_lengkap' => 'Rifansyah',
                 'NIDN' => '123456789',
-                'prodi' => 'Teknik Informatika',
+                'prodi' => 'Ilmu Komputer',
                 'jabatan' => 'Dosen',
-                'email' => 'Syahr9610@gmail.com',
-                'kontak' => '089696120616',
-                'password' => bcrypt('123456789'),
+                'email' => 'syahr9610@gmail.com',
+                'kontak' => '081234567890',
+                'password' =>   Hash::make('Rifansyah'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
-            [
-                'nama_lengkap' => 'inal',
-                'NIDN' => '987654321',
-                'prodi' => 'Sistem Informasi',
-                'jabatan' => 'Dosen',
-                'email' => 'inal@gmail',
-                'kontak' => '08123456789',
-                'password' => bcrypt('123456789'),
-            ],
-        
+
+            
         ]);
     }
-}
+};
+
+

@@ -16,37 +16,34 @@ class AuthController extends Controller
             'NIDN' => 'required|string',
             'password' => 'required|string',
         ]);
-    
+
         // Cari dosen berdasarkan NIDN
         $dosen = Dosen::where('NIDN', $request->NIDN)->first();
-    
+
         // Log untuk debugging
         \Log::info('Mencoba login dengan NIDN: ' . $request->NIDN);
-    
-        // Cek apakah dosen ditemukan dan password cocok tanpa hashing
-        if ($dosen) {
-            if ($request->password === $dosen->password) {
-                // Login berhasil, cek apakah password masih NIDN
-                if ($dosen->NIDN === $dosen->password) {
-                    // Jika password masih default (NIDN), arahkan untuk reset password
-                    return response()->json([
-                        'message' => 'Password harus diubah.',
-                        'change_password_required' => true,
-                    ], 200);
-                }
-    
-                // Jika password sudah diubah, berikan token login
-                $token = $dosen->createToken('auth_token')->plainTextToken;
-    
+
+        // dosen ditemukan dan password cocok
+        if ($dosen && Hash::check($request->password, $dosen->password)) {
+            // Jika password masih NIDN, arahkan untuk reset password
+            if ($request->NIDN === $request->password) {
                 return response()->json([
-                    'message' => 'Login berhasil',
-                    'token' => $token,
-                    'dosen' => $dosen,
-                    'change_password_required' => false,
+                    'message' => 'Password harus diubah.',
+                    'change_password_required' => true,
                 ], 200);
             }
+
+            // Jika password sudah diubah, berikan token login
+            $token = $dosen->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'message' => 'Login berhasil',
+                'token' => $token,
+                'dosen' => $dosen,
+                'change_password_required' => false,
+            ], 200);
         }
-    
+
         // Jika gagal
         \Log::warning('Login gagal untuk NIDN: ' . $request->NIDN);
         return response()->json(['message' => 'NIDN atau password salah'], 401);
@@ -69,7 +66,33 @@ class AuthController extends Controller
     ], 404);
 }
 
-// 
-    
-    
+  // Fungsi untuk menyimpan usulan proposal
+  public function submitProposal(Request $request)
+  {
+      // Validasi input
+      $request->validate([
+          'NIDN' => 'required|string|exists:db_dosen,NIDN',
+          'jenis_proposal' => 'required|string',
+          'kode_skim' => 'required|string',
+          'nama_skim' => 'required|string',
+          'sumber_dana' => 'required|numeric',
+      ]);
+  
+      // Simpan proposal ke database
+      $proposal = Proposal::create([
+          'NIDN' => $request->NIDN,
+          'jenis_proposal' => $request->jenis_proposal,
+          'kode_skim' => $request->kode_skim,
+          'nama_skim' => $request->nama_skim,
+          'sumber_dana' => $request->sumber_dana,
+      ]);
+  
+      return response()->json([
+          'message' => 'Proposal berhasil diajukan',
+          'proposal' => $proposal
+      ], 201);
+  }
 }
+    
+    
+
