@@ -1,7 +1,14 @@
 import { CardHome } from "@/components/CardHome";
 import Navbar from "@/components/Navbar";
 import Head from "next/head";
+import { useEffect } from "react";
 export default function Main() {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token || token.length === 0) {
+      window.location.href = "/login";
+    }
+  })
   return (
     <div className="">
       <Head>
