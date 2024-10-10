@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 
 // Ini adalah module scope
@@ -54,6 +54,13 @@ export default function Login() {
       [name]: value, // Mengandalkan TypeScript untuk mengetahui bahwa 'name' adalah salah satu kunci dataLogin
     }));
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token && token.length > 0) {
+      window.location.href = "/main";
+    }
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

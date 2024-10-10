@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -11,7 +12,7 @@ export default function Navbar() {
             <a>Beranda</a>
           </li>
           <li>
-            <a>Tentang</a>
+            <Link href={"/about"}>Tentang</Link>
           </li>
           <li>
             <details>
@@ -100,7 +101,7 @@ export default function Navbar() {
                   <a>Beranda</a>
                 </li>
                 <li>
-                  <a>Tentang</a>
+                  <Link href={"/about"}>Tentang</Link>
                 </li>
                 <li>
                   <details>
