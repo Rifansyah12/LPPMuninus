@@ -1,6 +1,7 @@
 import { CardHome } from "@/components/CardHome";
 import Navbar from "@/components/Navbar";
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect } from "react";
 export default function Main() {
   useEffect(() => {
@@ -35,7 +36,9 @@ export default function Main() {
         </div>
 
         <div className="flex justify-center items-center flex-wrap gap-4 my-[4rem]">
+          <Link href={"/dashboard/profile"}>
           <CardHome backgroundColor="#1C532A" />
+          </Link>
           <CardHome backgroundColor="#FFCC00" img="/humans.png" />
           <CardHome backgroundColor="#015bab" blue={true} img="/box.png" />
         </div>
