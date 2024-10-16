@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProposalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
-Route::post('/dosen/{NIDN}', [AuthController::class, 'getDosenDetail']);
+Route::get('/dosen/{NIDN}', [AuthController::class, 'getDosenDetail']);
+Route::post('/dosen', [AuthController::class, 'storeDosen']);
 Route::post('/submit-proposal', [AuthController::class, 'submitProposal']);
+// Route baru untuk ambil data dosen berdasarkan NIDN
+Route::get('/dosen/{NIDN}/category', [AuthController::class, 'getDosenDetailByCategory']);
+Route::resource('pengusulan', AuthController::class);
+
+// crud
+Route::post('/proposals', [ProposalController::class, 'store']);
+Route::get('/proposals', [ProposalController::class, 'index']);
+Route::put('/proposals/{id}', [ProposalController::class, 'update']);
+Route::delete('/proposals/{id}', [ProposalController::class, 'destroy']);
+
+
 
 

@@ -9,20 +9,29 @@ class Proposal extends Model
 {
     use HasFactory;
 
-    protected $table = 'proposal';
+    // Tentukan nama tabel jika tidak mengikuti konvensi
+    protected $table = 'proposals';
 
+    // Tentukan kolom yang dapat diisi massal
     protected $fillable = [
-        'NIDN',
-        'jenis_proposal',
-        'kode_skim',
-        'nama_skim',
-        'sumber_dana',
+        'jenis_penelitian',
+        'nama_lengkap',
+        'id_sinta',
+        'nidn',
+        'no_handphone',
+        'judul',
+        'rumpun_ilmu',
+        'tahun_usulan',
+        'skema',
+        'tema',
+        'lama_kegiatan',
+        'tanggal_mulai',
+        'tanggal_selesai',
+        'anggota',
     ];
 
-    // Relasi dengan model Dosen
-    public function dosen()
-    {
-        return $this->belongsTo(Dosen::class, 'NIDN', 'NIDN');
-    }
+    // Jika Anda ingin mendeklarasikan anggota sebagai JSON
+    protected $casts = [
+        'anggota' => 'array',
+    ];
 }
-

@@ -4,24 +4,24 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 
 export default function Profile() {
-   const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [activeMenu, setActiveMenu] = useState("Identitas Diri");
-   useEffect(() => {
-     const handleResize = () => {
-       setIsMobile(window.innerWidth < 768); // Ukuran 768px sesuai dengan breakpoint mobile
-     };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Ukuran 768px sesuai dengan breakpoint mobile
+    };
 
-     // Jalankan pertama kali untuk mengecek ukuran awal
-     handleResize();
+    // Jalankan pertama kali untuk mengecek ukuran awal
+    handleResize();
 
-     // Dengarkan setiap kali ukuran berubah
-     window.addEventListener("resize", handleResize);
+    // Dengarkan setiap kali ukuran berubah
+    window.addEventListener("resize", handleResize);
 
-     return () => {
-       window.removeEventListener("resize", handleResize);
-     };
-   }, []);
- 
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <div className="">
       <Head>
@@ -33,7 +33,7 @@ export default function Profile() {
       </Head>
       <div className="flex w-full bg-primary text-black">
         {/* Side Bar Start */}
-        {!isMobile && <Sidebar menu='profile' />}
+        {!isMobile && <Sidebar menu="profile" />}
         {/* Side Bar End */}
 
         {/* Content Start */}
@@ -194,13 +194,18 @@ const FormProfile = () => {
       </div>
     </form>
   );
-}
+};
 
 const EducationHistory = () => {
   return (
     <div className="flex w-full bg-white -mt-2 px-7 py-[5rem] gap-[7rem] items-center justify-center">
       <h1>Ini bagian education history</h1>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam molestiae adipisci alias vel neque corporis beatae quod quasi a totam natus repudiandae mollitia expedita id repellendus reprehenderit velit, quaerat exercitationem?</p>
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam
+        molestiae adipisci alias vel neque corporis beatae quod quasi a totam
+        natus repudiandae mollitia expedita id repellendus reprehenderit velit,
+        quaerat exercitationem?
+      </p>
     </div>
   );
-}
+};

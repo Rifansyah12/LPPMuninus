@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dosen;
+use App\Models\Pengusulan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -23,7 +25,7 @@ class AuthController extends Controller
         // Log untuk debugging
         \Log::info('Mencoba login dengan NIDN: ' . $request->NIDN);
 
-        // dosen ditemukan dan password cocok
+        // Dosen ditemukan dan password cocok
         if ($dosen && Hash::check($request->password, $dosen->password)) {
             // Jika password masih NIDN, arahkan untuk reset password
             if ($request->NIDN === $request->password) {
@@ -49,50 +51,106 @@ class AuthController extends Controller
         return response()->json(['message' => 'NIDN atau password salah'], 401);
     }
     
-
-    // functon untuk mengambil data dosen susuai dengan NIDN
-    public function getDosenDetail($NIDN)
-{
-    $dosen = Dosen::where('NIDN', $NIDN)->first();
-    if ($dosen) {
+    // Function untuk mengambil data dosen sesuai dengan NIDN
+    public function getDosenDetailByCategory(Request $request, $NIDN)
+    {
+        // Dapatkan data dosen berdasarkan NIDN
+        $dosen = Dosen::where('NIDN', $NIDN)->first();
+    
+        if ($dosen) {
+            // Kirim hanya data tertentu ke frontend berdasarkan permintaan category
+            return response()->json([
+                'message' => 'Detail dosen ditemukan',
+                'dosen' => [
+                    'nama_lengkap' => $dosen->nama_lengkap,
+                    'kontak' => $dosen->kontak,
+                    // Jika kategori lain diperlukan, tambahkan di sini
+                ]
+            ], 200);
+        }
+    
         return response()->json([
-            'message' => 'Detail dosen ditemukan',
-            'dosen' => $dosen,
-        ], 200);
+            'message' => 'Dosen tidak ditemukan',
+        ], 404);
     }
 
-    return response()->json([
-        'message' => 'Dosen tidak ditemukan',
-    ], 404);
-}
+    // CRUD untuk Pengusulan
 
-  // Fungsi untuk menyimpan usulan proposal
-  public function submitProposal(Request $request)
-  {
-      // Validasi input
-      $request->validate([
-          'NIDN' => 'required|string|exists:db_dosen,NIDN',
-          'jenis_proposal' => 'required|string',
-          'kode_skim' => 'required|string',
-          'nama_skim' => 'required|string',
-          'sumber_dana' => 'required|numeric',
-      ]);
-  
-      // Simpan proposal ke database
-      $proposal = Proposal::create([
-          'NIDN' => $request->NIDN,
-          'jenis_proposal' => $request->jenis_proposal,
-          'kode_skim' => $request->kode_skim,
-          'nama_skim' => $request->nama_skim,
-          'sumber_dana' => $request->sumber_dana,
-      ]);
-  
-      return response()->json([
-          'message' => 'Proposal berhasil diajukan',
-          'proposal' => $proposal
-      ], 201);
-  }
-}
-    
-    
+    public function index()
+    {
+        // Ambil semua data pengusulan
+        $pengusulan = Pengusulan::all();
+        return response()->json($pengusulan);
+    }
 
+    public function store(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'jenis_usulan' => 'required|string',
+            'identitas_pengusul' => 'required|string',
+            'identitas_usulan' => 'required|string',
+            'file_proposal' => 'required|string',
+            'rencana_anggaran' => 'required|numeric',
+            'dokumen_pendukung' => 'required|string',
+        ]);
+
+        // Buat pengusulan baru
+        $pengusulan = Pengusulan::create($request->all());
+
+        return response()->json([
+            'message' => 'Pengusulan berhasil dibuat',
+            'data' => $pengusulan,
+        ], 201);
+    }
+
+    public function show($id)
+    {
+        // Cari pengusulan berdasarkan ID
+        $pengusulan = Pengusulan::find($id);
+        
+        if ($pengusulan) {
+            return response()->json($pengusulan);
+        }
+        
+        return response()->json(['message' => 'Pengusulan tidak ditemukan'], 404);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'jenis_usulan' => 'required|string',
+            'identitas_pengusul' => 'required|string',
+            'identitas_usulan' => 'required|string',
+            'file_proposal' => 'required|string',
+            'rencana_anggaran' => 'required|numeric',
+            'dokumen_pendukung' => 'required|string',
+        ]);
+
+        // Cari pengusulan berdasarkan ID
+        $pengusulan = Pengusulan::find($id);
+
+        if ($pengusulan) {
+            // Update data pengusulan
+            $pengusulan->update($request->all());
+            return response()->json(['message' => 'Pengusulan berhasil diperbarui', 'data' => $pengusulan]);
+        }
+
+        return response()->json(['message' => 'Pengusulan tidak ditemukan'], 404);
+    }
+
+    public function destroy($id)
+    {
+        // Cari pengusulan berdasarkan ID
+        $pengusulan = Pengusulan::find($id);
+
+        if ($pengusulan) {
+            // Hapus pengusulan
+            $pengusulan->delete();
+            return response()->json(['message' => 'Pengusulan berhasil dihapus']);
+        }
+
+        return response()->json(['message' => 'Pengusulan tidak ditemukan'], 404);
+    }
+}

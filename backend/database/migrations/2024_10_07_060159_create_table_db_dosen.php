@@ -21,8 +21,11 @@ class CreateTableDbDosen extends Migration
             $table->string('jabatan', 100)->nullable();
             $table->string('email', 100);
             $table->string('kontak', 15)->nullable();
-            $table->timestamps();
             $table->string('password', 255);
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
+            $table->string('tempat_lahir', 100);
+            $table->date('tanggal_lahir');
+            $table->text('alamat');
         });
     }
 
