@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProposalController;
+use App\Http\Controllers\RekapPengusulanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,12 +30,15 @@ Route::post('/submit-proposal', [AuthController::class, 'submitProposal']);
 Route::get('/dosen/{NIDN}/category', [AuthController::class, 'getDosenDetailByCategory']);
 Route::resource('pengusulan', AuthController::class);
 
-// crud
+// crud_proposal(usulan)
 Route::post('/proposals', [ProposalController::class, 'store']);
 Route::get('/proposals', [ProposalController::class, 'index']);
 Route::put('/proposals/{id}', [ProposalController::class, 'update']);
 Route::delete('/proposals/{id}', [ProposalController::class, 'destroy']);
 
+// REKAP_PENGUSULAN
+Route::get('/rekap/{id}/proposal', [RekapPengusulanController::class, 'detailProposal'])->name('rekap.detailProposal');
+Route::get('/rekap/{id}/tahapan', [RekapPengusulanController::class, 'detailTahapan'])->name('rekap.detailTahapan');
 
 
 

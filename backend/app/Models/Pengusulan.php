@@ -13,9 +13,12 @@ class Pengusulan extends Model
 
     protected $fillable = [
         'jenis_usulan',
+        'SKIM',
+        'nama_SKIM',
         'identitas_pengusul',
         'identitas_usulan',
         'file_proposal',
+        'sumber_dana',
         'rencana_anggaran',
         'dokumen_pendukung',
     ];

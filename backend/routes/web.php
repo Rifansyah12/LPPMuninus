@@ -1,21 +1,19 @@
 <?php
 
-use App\Http\Controllers\PengusulanController;
+use Illuminate\Support\Facades\Route;
 
-// Route untuk menampilkan daftar pengusulan
-Route::get('/pengusulan', [PengusulanController::class, 'index'])->name('pengusulan.index');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
-// Route untuk menampilkan form tambah pengusulan
-Route::get('/pengusulan/create', [PengusulanController::class, 'create'])->name('pengusulan.create');
-
-// Route untuk menyimpan pengusulan
-Route::post('/pengusulan', [PengusulanController::class, 'store'])->name('pengusulan.store');
-
-// Route untuk menampilkan form edit pengusulan
-Route::get('/pengusulan/{id}/edit', [PengusulanController::class, 'edit'])->name('pengusulan.edit');
-
-// Route untuk mengupdate pengusulan
-Route::put('/pengusulan/{id}', [PengusulanController::class, 'update'])->name('pengusulan.update');
-
-// Route untuk menghapus pengusulan
-Route::delete('/pengusulan/{id}', [PengusulanController::class, 'destroy'])->name('pengusulan.destroy');
+Route::get('/', function () {
+    return view('login-v2');
+});
+Route::get('/profil', [UserController::class, 'showProfile'])->name('user.profile');
