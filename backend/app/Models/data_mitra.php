@@ -14,11 +14,10 @@ class data_mitra extends Model
     protected $fillable = [
         'nama_mitra',
         'alamat',
-        'desa/kecamatan',
-        'kota/kabupaten',
-        'provinsi',
-        'jarak_dari_USK',
-        'Durasi_dari_USK'
+        'pimpinan_mitra',
+        'no_hp',
+        'konstribusi',
+        'surat_ketersediaan_path'
     ];
     public function getStatusDatamitra()
     {

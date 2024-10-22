@@ -17,11 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('nama_mitra');
             $table->text('alamat');
-            $table->string('desa_keecamatan');
-            $table->string('kota_kabupaten');
-            $table->string('provinsi');
-            $table->decimal('jarak_dari_USK',8,2);
-            $table->string('durasi_dari_USK');
+            $table->string('pimpinan_mitra');
+            $table->string('no_hp');
+            $table->string('konstribusi');
+            $table->string('surat_ketersediaan_path')->nullable();
             $table->timestamps();
 
         });
