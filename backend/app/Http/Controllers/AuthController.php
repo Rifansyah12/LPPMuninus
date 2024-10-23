@@ -90,31 +90,60 @@ class AuthController extends Controller
             'jenis_usulan' => 'required|string',
             'identitas_pengusul' => 'required|string',
             'identitas_usulan' => 'required|string',
-            'file_proposal' => 'required|string',
+            'file_proposal' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
             'rencana_anggaran' => 'required|numeric',
-            'dokumen_pendukung' => 'required|string',
+            'dokumen_pendukung' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
-
-        // Buat pengusulan baru
-        $pengusulan = Pengusulan::create($request->all());
-
+    
+        // Upload dokumen pendukung
+        $pathDokumenPendukung = null;
+        if ($request->hasFile('dokumen_pendukung')) {
+            $file = $request->file('dokumen_pendukung');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $pathDokumenPendukung = $file->storeAs('public/dokumen_pendukung', $filename);
+        }
+    
+        // Upload file proposal jika ada
+        $pathProposal = null;
+        if ($request->hasFile('file_proposal')) {
+            $proposal = $request->file('file_proposal');
+            $proposalName = time() . '_' . $proposal->getClientOriginalName();
+            $pathProposal = $proposal->storeAs('public/proposal', $proposalName);
+        }
+    
+        // Simpan data pengusulan ke database
+        $pengusulan = Pengusulan::create([
+            'jenis_usulan' => $request->jenis_usulan,
+            'identitas_pengusul' => $request->identitas_pengusul,
+            'identitas_usulan' => $request->identitas_usulan,
+            'file_proposal' => $pathProposal,
+            'rencana_anggaran' => $request->rencana_anggaran,
+            'dokumen_pendukung' => $pathDokumenPendukung,
+        ]);
+    
         return response()->json([
             'message' => 'Pengusulan berhasil dibuat',
             'data' => $pengusulan,
         ], 201);
     }
+    
 
     public function show($id)
     {
         // Cari pengusulan berdasarkan ID
         $pengusulan = Pengusulan::find($id);
-        
+    
         if ($pengusulan) {
+            // Tambahkan URL untuk dokumen pendukung dan file proposal
+            $pengusulan->dokumen_pendukung_url = asset('storage/dokumen_pendukung/' . basename($pengusulan->dokumen_pendukung));
+            $pengusulan->file_proposal_url = asset('storage/proposal/' . basename($pengusulan->file_proposal));
+            
             return response()->json($pengusulan);
         }
-        
+    
         return response()->json(['message' => 'Pengusulan tidak ditemukan'], 404);
     }
+    
 
     public function update(Request $request, $id)
     {
@@ -123,22 +152,43 @@ class AuthController extends Controller
             'jenis_usulan' => 'required|string',
             'identitas_pengusul' => 'required|string',
             'identitas_usulan' => 'required|string',
-            'file_proposal' => 'required|string',
+            'file_proposal' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
             'rencana_anggaran' => 'required|numeric',
-            'dokumen_pendukung' => 'required|string',
+            'dokumen_pendukung' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
-
+    
         // Cari pengusulan berdasarkan ID
         $pengusulan = Pengusulan::find($id);
-
+    
         if ($pengusulan) {
-            // Update data pengusulan
-            $pengusulan->update($request->all());
-            return response()->json(['message' => 'Pengusulan berhasil diperbarui', 'data' => $pengusulan]);
+            // Upload dan update dokumen pendukung jika ada
+            if ($request->hasFile('dokumen_pendukung')) {
+                $file = $request->file('dokumen_pendukung');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $pathDokumenPendukung = $file->storeAs('public/dokumen_pendukung', $filename);
+                $pengusulan->dokumen_pendukung = $pathDokumenPendukung;
+            }
+    
+            // Upload dan update file proposal jika ada
+            if ($request->hasFile('file_proposal')) {
+                $proposal = $request->file('file_proposal');
+                $proposalName = time() . '_' . $proposal->getClientOriginalName();
+                $pathProposal = $proposal->storeAs('public/proposal', $proposalName);
+                $pengusulan->file_proposal = $pathProposal;
+            }
+    
+            // Update data lainnya
+            $pengusulan->update($request->except(['file_proposal', 'dokumen_pendukung']));
+    
+            return response()->json([
+                'message' => 'Pengusulan berhasil diperbarui',
+                'data' => $pengusulan,
+            ]);
         }
-
+    
         return response()->json(['message' => 'Pengusulan tidak ditemukan'], 404);
     }
+    
 
     public function destroy($id)
     {
