@@ -1,20 +1,104 @@
 import Navbar from "@/components/Navbar";
-import {
-  faGraduationCap,
-  faInbox,
-  faSquareCheck,
-  faUserGroup,
-} from "@fortawesome/free-solid-svg-icons";
+import { faGraduationCap, faInbox, faSquareCheck, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import { DataChart } from "@/utils/Data";
-import { Pie } from "react-chartjs-2";
-import { Chart, ArcElement, Tooltip, Legend, Title } from "chart.js"; // Import for runtime usage
-import type { ChartData, ChartOptions } from "chart.js"; // Import type-only
+import { CartesianGrid, Legend, Line, LineChart, Pie, PieChart, Tooltip, XAxis, YAxis } from "recharts";
 
-// Register required Chart.js components
-Chart.register(ArcElement, Tooltip, Legend, Title);
-
+const data = [
+  {
+    name: "Page A",
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: "Page B",
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+  },
+  {
+    name: "Page C",
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Page D",
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
+  },
+  {
+    name: "Page E",
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: "Page F",
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: "Page G",
+    uv: 3490,
+    pv: 4300,
+    amt: 2100,
+  },
+];
+const data01 = [
+  {
+    name: "Group A",
+    value: 400,
+  },
+  {
+    name: "Group B",
+    value: 300,
+  },
+  {
+    name: "Group C",
+    value: 300,
+  },
+  {
+    name: "Group D",
+    value: 200,
+  },
+  {
+    name: "Group E",
+    value: 278,
+  },
+  {
+    name: "Group F",
+    value: 189,
+  },
+];
+const data02 = [
+  {
+    name: "Group A",
+    value: 2400,
+  },
+  {
+    name: "Group B",
+    value: 4567,
+  },
+  {
+    name: "Group C",
+    value: 1398,
+  },
+  {
+    name: "Group D",
+    value: 9800,
+  },
+  {
+    name: "Group E",
+    value: 3908,
+  },
+  {
+    name: "Group F",
+    value: 4800,
+  },
+];
 export default function App() {
   return (
     <div className="">
@@ -85,13 +169,48 @@ export default function App() {
         </div>
 
         <h2 className="text-black text-lg py-4">Data 10 Tahun Terakhir</h2>
-        <div className="flex justify-center gap-7">
-          <div className="w-[25rem] p-2 bg-white shadow-md">
-            <ChartData />
-          </div>
-          <div className="w-[25rem] p-2">
-            <ChartData />
-          </div>
+        <div className="flex justify-center">
+          <LineChart
+            width={730}
+            height={250}
+            data={data}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            style={{ backgroundColor: "white" }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="pv" stroke="#8884d8" />
+            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+          </LineChart>
+          <PieChart
+            width={730}
+            height={250}
+            style={{ backgroundColor: "white" }}
+          >
+            <Pie
+              data={data01}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={50}
+              fill="#8884d8"
+            />
+            <Pie
+              data={data02}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={80}
+              fill="#82ca9d"
+              label
+            />
+          </PieChart>
         </div>
 
         <footer>
@@ -104,52 +223,3 @@ export default function App() {
     </div>
   );
 }
-
-const ChartData = () => {
-  const [chartData, setChartData] = useState<ChartData<"pie">>({
-    labels: DataChart.map((data) => data.year),
-    datasets: [
-      {
-        label: "Users Gained",
-        data: DataChart.map((data) => data.userGain),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0",
-        ],
-        borderColor: "black",
-        borderWidth: 2,
-      },
-    ],
-  });
-
-  return (
-    <div className="">
-      <PieChart chartData={chartData} />
-    </div>
-  );
-};
-
-// PieChart component receives ChartData and uses Chart.js for rendering
-const PieChart = ({ chartData }: { chartData: ChartData<"pie"> }) => {
-  return (
-    <div className="">
-      <h2 style={{ textAlign: "center" }}>Pie Chart</h2>
-      <Pie
-        data={chartData}
-        options={
-          {
-            plugins: {
-              title: {
-                display: true,
-                text: "Users Gained between 2016-2020",
-              },
-            },
-          } as ChartOptions<"pie">
-        }
-      />
-    </div>
-  );
-};
