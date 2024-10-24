@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Models;
+
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject; // Import JWTSubject
 
-class Dosen extends Model
+class Dosen extends Model implements JWTSubject // Implementasikan JWTSubject
 {
     use HasApiTokens;
 
@@ -19,6 +21,10 @@ class Dosen extends Model
         'email',
         'kontak',
         'password',
+        'jenis_kelamin',     // Tambahkan kolom jenis_kelamin
+        'tempat_lahir',     
+        'tanggal_lahir',   
+        'alamat',  
     ];
 
     protected $hidden = [
@@ -27,4 +33,20 @@ class Dosen extends Model
     ];
 
     public $timestamps = true; // Untuk created_at dan updated_at
+
+    // Mengembalikan identifikasi token
+    public function getJWTIdentifier()
+    {
+        return $this->getKey(); // ID dari model
+    }
+
+    // Mengembalikan klaim kustom token
+    public function getJWTCustomClaims()
+    {
+        return [
+            'id' => $this->getKey(),          // ID dari model
+            'nama_lengkap' => $this->nama_lengkap, // Menambahkan nama lengkap
+            'NIDN' => $this->NIDN,            // Menambahkan NIDN
+        ];
+    }
 }
