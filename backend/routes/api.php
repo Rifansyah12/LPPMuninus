@@ -39,10 +39,10 @@ Route::put('/pengusulan/{id}', [PengusulanController::class, 'update']);
 Route::delete('/pengusulan/{id}', [PengusulanController::class, 'destroy']);
 
 // crud_proposal(usulan)
-Route::post('/proposals', [ProposalController::class, 'store']);
-Route::get('/proposals', [ProposalController::class, 'index']);
-Route::put('/proposals/{id}', [ProposalController::class, 'update']);
-Route::delete('/proposals/{id}', [ProposalController::class, 'destroy']);
+// Route::post('/proposals', [ProposalController::class, 'store']);
+// Route::get('/proposals', [ProposalController::class, 'index']);
+// Route::put('/proposals/{id}', [ProposalController::class, 'update']);
+// Route::delete('/proposals/{id}', [ProposalController::class, 'destroy']);
 
 // REKAP_PENGUSULAN
 Route::get('/rekap/{id}/proposal', [RekapPengusulanController::class, 'detailProposal'])->name('rekap.detailProposal');

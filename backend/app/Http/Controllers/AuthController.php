@@ -75,7 +75,7 @@ public function getDosenDetail($NIDN)
                 'jenis_kelamin' => $dosen->jenis_kelamin,
                 'alamat' =>$dosen->alamat,
                 'tempat_lahir'=>$dosen ->tempat_lahir,     
-                'tanggal_lahir'=>$dosen ->tempat_lahir,
+                'tanggal_lahir'=>$dosen ->tanggal_lahir,
             ]
         ], 200);
     }
