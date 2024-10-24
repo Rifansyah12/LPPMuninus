@@ -198,14 +198,26 @@ const FormProfile = () => {
 
 const EducationHistory = () => {
   return (
-    <div className="flex w-full bg-white -mt-2 px-7 py-[5rem] gap-[7rem] items-center justify-center">
-      <h1>Ini bagian education history</h1>
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam
-        molestiae adipisci alias vel neque corporis beatae quod quasi a totam
-        natus repudiandae mollitia expedita id repellendus reprehenderit velit,
-        quaerat exercitationem?
-      </p>
+    <div className="flex w-full bg-white px-2 py-[5rem] gap-[7rem] flex-col items-center justify-center">
+      <form action="" className="w-full">
+        <div className="flex justify-center flex-col gap-3">
+          <InputForm label="Pendidikan S1" type="text" name="educationS1" />
+          <InputForm label="Pendidikan S2" type="text" name="educationS2" />
+          <InputForm
+            label="Asal Pendidikan S1"
+            type="text"
+            name="originEducationS1"
+          />
+          <InputForm
+            label="Asal Pendidikan S2"
+            type="text"
+            name="originEducationS2"
+          />
+          <button className="btn bg-[#1C532A] text-white mt-6">
+            Simpan
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
