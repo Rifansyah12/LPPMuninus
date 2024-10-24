@@ -1,5 +1,10 @@
 import Navbar from "@/components/Navbar";
-import { faGraduationCap, faInbox, faSquareCheck, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGraduationCap,
+  faInbox,
+  faSquareCheck,
+  faUserGroup,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CartesianGrid, Legend, Line, LineChart, Pie, PieChart, Tooltip, XAxis, YAxis } from "recharts";
 
@@ -99,7 +104,7 @@ const data02 = [
     value: 4800,
   },
 ];
-export default function App() {
+export default function Statistic() {
   return (
     <div className="">
       <Navbar />
@@ -223,3 +228,6 @@ export default function App() {
     </div>
   );
 }
+
+
+// PieChart component receives ChartData and uses Chart.js for rendering
