@@ -21,10 +21,11 @@ class Dosen extends Model implements JWTSubject // Implementasikan JWTSubject
         'email',
         'kontak',
         'password',
-        'jenis_kelamin',     // Tambahkan kolom jenis_kelamin
+        'jenis_kelamin',    
         'tempat_lahir',     
         'tanggal_lahir',   
-        'alamat',  
+        'alamat',
+        'foto_profil',  
     ];
 
     protected $hidden = [

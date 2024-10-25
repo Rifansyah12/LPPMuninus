@@ -21,10 +21,10 @@ class PengusulanController extends Controller
             'nama_SKIM' => 'required|string',
             'identitas_pengusul' => 'required|string',
             'identitas_usulan' => 'required|string',
-            'file_proposal' => 'required|file|mimes:pdf,doc,docx|max:2048', // Ubah nullable menjadi required
+            'file_proposal' => 'required|file|mimes:pdf,doc,docx|max:2048', 
             'sumber_dana' => 'required|string',
             'rencana_anggaran' => 'required|numeric',
-            'dokumen_pendukung' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'dokumen_pendukung' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
         ]);
     
         // Proses upload file proposal
@@ -49,7 +49,7 @@ class PengusulanController extends Controller
     
         return response()->json([
             'message' => 'Pengusulan berhasil dibuat',
-            'data' => $pengusulan,
+            'data_Pengusulan' => $pengusulan,
         ], 201);
     }
     
@@ -101,7 +101,7 @@ class PengusulanController extends Controller
 
         return response()->json([
             'message' => 'Pengusulan berhasil diperbarui',
-            'data' => $pengusulan,
+            'data_Pengusulan' => $pengusulan,
         ]);
     }
 

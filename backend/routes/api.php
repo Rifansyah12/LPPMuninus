@@ -26,11 +26,12 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('dosen', [AuthController::class, 'getDosenFromToken'])->middleware('auth:api');
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/dosen/{NIDN}', [AuthController::class, 'getDosenDetail']);
+Route::post('/dosen/{NIDN}/foto', [AuthController::class, 'updateFotoProfil']);
 Route::post('/dosen', [AuthController::class, 'storeDosen']);
 Route::post('/submit-proposal', [AuthController::class, 'submitProposal']);
 // Route baru untuk ambil data dosen berdasarkan NIDN
 Route::get('/dosen/{NIDN}/category', [AuthController::class, 'getDosenDetailByCategory']);
-Route::resource('pengusulan', AuthController::class);
+// Route::resource('pengusulan', AuthController::class);
 // pengusulan
 Route::get('/pengusulan', [PengusulanController::class, 'index']);
 Route::post('/pengusulan', [PengusulanController::class, 'store']);

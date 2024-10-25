@@ -26,6 +26,8 @@ class CreateTableDbDosen extends Migration
             $table->string('tempat_lahir', 100);
             $table->date('tanggal_lahir');
             $table->text('alamat');
+            $table->string('foto_profil', 255)->nullable();
+            $table->timestamps();
         });
     }
 

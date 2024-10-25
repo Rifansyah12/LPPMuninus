@@ -26,6 +26,7 @@ class DosenSeeder extends Seeder
                 'tempat_lahir' => 'Bandung',
                 'tanggal_lahir' => '1990-05-21',
                 'alamat' => 'Jl. Merdeka No. 45, Bandung', 
+                'foto_profil' =>'',
             ],
 
             
