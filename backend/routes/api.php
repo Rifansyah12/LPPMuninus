@@ -7,6 +7,7 @@ use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\RekapPengusulanController;
 use App\Http\Controllers\PengusulanController;
 use App\Http\Controllers\RiwayatPendidikanController;
+use App\Http\Controllers\DataRiwayatPenelitianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/riwayat-pendidikan', [RiwayatPendidikanController::class, 'store']);
     Route::get('/riwayat-pendidikan', [RiwayatPendidikanController::class, 'show']);
 });
+
+
+// riwayat penelitian
+Route::get('data-riwayat-penelitian', [DataRiwayatPenelitianController::class, 'index']);
+Route::post('data-riwayat-penelitian', [DataRiwayatPenelitianController::class, 'store']);
 
 // REKAP_PENGUSULAN
 Route::get('/rekap/{id}/proposal', [RekapPengusulanController::class, 'detailProposal'])->name('rekap.detailProposal');
