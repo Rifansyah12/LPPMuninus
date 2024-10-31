@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\RekapPengusulanController;
 use App\Http\Controllers\PengusulanController;
+use App\Http\Controllers\RiwayatPendidikanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,9 +46,17 @@ Route::delete('/pengusulan/{id}', [PengusulanController::class, 'destroy']);
 // Route::put('/proposals/{id}', [ProposalController::class, 'update']);
 // Route::delete('/proposals/{id}', [ProposalController::class, 'destroy']);
 
+// Riwayat_pendidikan
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/riwayat-pendidikan', [RiwayatPendidikanController::class, 'store']);
+    Route::get('/riwayat-pendidikan', [RiwayatPendidikanController::class, 'show']);
+});
+
 // REKAP_PENGUSULAN
 Route::get('/rekap/{id}/proposal', [RekapPengusulanController::class, 'detailProposal'])->name('rekap.detailProposal');
 Route::get('/rekap/{id}/tahapan', [RekapPengusulanController::class, 'detailTahapan'])->name('rekap.detailTahapan');
+
+
 
 
 
