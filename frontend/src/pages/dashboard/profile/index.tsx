@@ -213,9 +213,7 @@ const EducationHistory = () => {
             type="text"
             name="originEducationS2"
           />
-          <button className="btn bg-[#1C532A] text-white mt-6">
-            Simpan
-          </button>
+          <button className="btn bg-[#1C532A] text-white mt-6">Simpan</button>
         </div>
       </form>
     </div>

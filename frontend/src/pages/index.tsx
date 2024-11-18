@@ -1,7 +1,22 @@
 import Navbar from "@/components/Navbar";
-import { faGraduationCap, faInbox, faSquareCheck, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGraduationCap,
+  faInbox,
+  faSquareCheck,
+  faUserGroup,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CartesianGrid, Legend, Line, LineChart, Pie, PieChart, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const data = [
   {

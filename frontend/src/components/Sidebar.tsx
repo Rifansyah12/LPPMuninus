@@ -28,7 +28,7 @@ export default function Sidebar({ menu }: SidebarProps) {
             href={"/dashboard/profile"}
           />
 
-          <div
+          {/* <div
             className={`${
               menu === "usulan-new" || menu === "usulan-recap"
                 ? "bg-white text-[#1C532A]"
@@ -50,67 +50,45 @@ export default function Sidebar({ menu }: SidebarProps) {
               <li>
                 <details>
                   <summary className="font-semibold text-lg text">
-                    Usulan
+                    Pengusulan
                   </summary>
-                  <ul
-                    className={` ${
-                      menu === "usulan-new" || menu === "usulan-recap"
-                        ? "text-white"
-                        : ""
-                    } rounded-t-none bg-secondary font-semibold`}
-                  >
-                    <li
-                      className={`${
-                        menu === "usulan-new"
-                          ? "underline underline-offset-2"
-                          : ""
-                      }}`}
-                    >
-                      <Link href="/dashboard/proposal/new">Usulan Baru</Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={`${
-                          menu === "usulan-recap"
-                            ? "underline underline-offset-2"
-                            : ""
-                        }}`}
-                        href="/dashboard/proposal/recap"
-                      >
-                        Rekap Usulan
-                      </Link>
-                    </li>
-                  </ul>
                 </details>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Tambahkan active props pada item lain */}
+          <ListMenu
+            text="Pengusulan"
+            icon="/icon/usulan.png"
+            active={menu === "Pengusulan"} // Aktifkan jika menu = "tahapan"
+            href={"/dashboard/proposal/pengusulan"}
+          />
+
           <ListMenu
             text="Tahapan"
             icon="/icon/tahapan.png"
             active={menu === "tahapan"} // Aktifkan jika menu = "tahapan"
             href={"/dashboard/tahapan"}
           />
-          <ListMenu
+          {/* <ListMenu
             text="Hasil"
             icon="/icon/hasil.png"
             active={menu === "hasil"} // Aktifkan jika menu = "hasil"
             href={"/dashboard/hasil"}
-          />
+          /> */}
           <ListMenu
             text="Statistik"
             icon="/icon/piechart.png"
             active={menu === "statistik"} // Aktifkan jika menu = "statistik"
             href={"/dashboard/statistik"}
           />
-          <ListMenu
+          {/* <ListMenu
             text="Reviewer"
             icon="/icon/review.png"
             active={menu === "reviewer"} // Aktifkan jika menu = "reviewer"
             href={"/dashboard/reviewer"}
-          />
+          /> */}
         </div>
       </div>
       <h3 className="pl-4 text-base font-semibold">USER</h3>
@@ -123,7 +101,7 @@ export default function Sidebar({ menu }: SidebarProps) {
             href={"/dashboard"}
           />
           <ListMenu
-            text="Rekap Pengusulan"
+            text="Riwayat Pengajuan"
             icon="/icon/summary.svg"
             active={menu === "rekap"} // Aktifkan jika menu = "rekap"
             href={"/dashboard/summary"}

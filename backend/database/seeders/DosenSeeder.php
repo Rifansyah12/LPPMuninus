@@ -22,7 +22,7 @@ class DosenSeeder extends Seeder
                 'email' => 'syahr9610@gmail.com',
                 'kontak' => '081234567890',
                 'password' =>   Hash::make('Rifansyah'),
-                'jenis_kelamin' => 'Laki-laki',
+                'jenis_kelamin' => 'L',
                 'tempat_lahir' => 'Bandung',
                 'tanggal_lahir' => '1990-05-21',
                 'alamat' => 'Jl. Merdeka No. 45, Bandung', 

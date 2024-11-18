@@ -5,9 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\RekapPengusulanController;
-use App\Http\Controllers\PengusulanController;
 use App\Http\Controllers\RiwayatPendidikanController;
 use App\Http\Controllers\DataRiwayatPenelitianController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TabelPengusulanController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,16 +32,33 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/dosen/{NIDN}', [AuthController::class, 'getDosenDetail']);
 Route::post('/dosen/{NIDN}/foto', [AuthController::class, 'updateFotoProfil']);
 Route::post('/dosen', [AuthController::class, 'storeDosen']);
+Route::get('/dosen', [AuthController::class, 'getAllDosen']);
+
 Route::post('/submit-proposal', [AuthController::class, 'submitProposal']);
+
 // Route baru untuk ambil data dosen berdasarkan NIDN
 Route::get('/dosen/{NIDN}/category', [AuthController::class, 'getDosenDetailByCategory']);
-// Route::resource('pengusulan', AuthController::class);
-// pengusulan
-Route::get('/pengusulan', [PengusulanController::class, 'index']);
-Route::post('/pengusulan', [PengusulanController::class, 'store']);
-Route::get('/pengusulan/{id}', [PengusulanController::class, 'show']);
-Route::put('/pengusulan/{id}', [PengusulanController::class, 'update']);
-Route::delete('/pengusulan/{id}', [PengusulanController::class, 'destroy']);
+// profile
+Route::middleware('auth:sanctum')->get('/profile', [ProfileController::class, 'getProfile']);
+
+// // Route::resource('pengusulan', AuthController::class);
+// // pengusulan
+// Route::get('/pengusulan', [PengusulanController::class, 'index']);
+// Route::post('/pengusulan', [PengusulanController::class, 'store']);
+// Route::get('/pengusulan/{id}', [PengusulanController::class, 'show']);
+// Route::put('/pengusulan/{id}', [PengusulanController::class, 'update']);
+// Route::delete('/pengusulan/{id}', [PengusulanController::class, 'destroy']);
+
+
+// Tabel_pengusulan
+
+
+Route::get('/pengusulan', [TabelPengusulanController::class, 'index']);
+Route::post('/pengusulan', [TabelPengusulanController::class, 'store']);
+Route::get('/pengusulan/{id}', [TabelPengusulanController::class, 'show']);
+Route::put('/pengusulan/{id}', [TabelPengusulanController::class, 'update']);
+Route::delete('/pengusulan/{id}', [TabelPengusulanController::class, 'destroy']);
+
 
 // crud_proposal(usulan)
 // Route::post('/proposals', [ProposalController::class, 'store']);

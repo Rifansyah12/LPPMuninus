@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DataRiwayatPenelitian extends Model
+class RiwayatPenelitian extends Model
 {
     use HasFactory;
 
@@ -27,3 +27,4 @@ class DataRiwayatPenelitian extends Model
         return $this->belongsTo(Dosen::class, 'nidn', 'NIDN');
     }
 }
+    

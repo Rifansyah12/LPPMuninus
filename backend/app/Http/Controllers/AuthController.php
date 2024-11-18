@@ -166,6 +166,14 @@ public function updateFotoProfil(Request $request, $NIDN)
 
     return response()->json(['message' => 'Dosen tidak ditemukan'], 404);
 }
+    public function getAllDosen()
+{
+    // Misalkan Anda mengambil data dari model Dosen
+    $dosen = Dosen::select('NIDN', 'name')->get();
+    return response()->json($dosen);
+}
+
+}
 
 //     // CRUD untuk Pengusulan
 //     public function index()
@@ -279,4 +287,3 @@ public function updateFotoProfil(Request $request, $NIDN)
 //         return response()->json(['message' => 'Pengusulan tidak ditemukan'], 404);
 //     }
 // }
-}

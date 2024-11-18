@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class tabel_pengusulan_baru extends Migration
 {
     /**
      * Jalankan migration.
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('sumber_dana'); 
             $table->decimal('rencana_anggaran', 15, 2); 
             $table->string('dokumen_pendukung');
-            $table->timestamps(); 
+            $table->timestamps();       
         });
     }
 

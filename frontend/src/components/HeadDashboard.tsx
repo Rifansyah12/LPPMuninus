@@ -1,74 +1,73 @@
 import { useState } from "react";
 import Sidebar from "./Sidebar";
 
-export default function HeadDashboard({title}: {title: string}) {
-    const [searchValue, setSearchValue] = useState("");
+export default function HeadDashboard({ title }: { title: string }) {
+  const [searchValue, setSearchValue] = useState("");
 
-    // Fungsi untuk menangani klik dan enter
-    const handleSearch = () => {
-      console.log(searchValue); // Menampilkan nilai input di console
-    };
+  // Fungsi untuk menangani klik dan enter
+  const handleSearch = () => {
+    console.log(searchValue); // Menampilkan nilai input di console
+  };
 
-    // Fungsi untuk menangani tombol "Enter"
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === "Enter") {
-        handleSearch();
-      }
-    };
+  // Fungsi untuk menangani tombol "Enter"
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
   return (
     <header>
       <div className="lg:h-[130px] h-[5rem] lg:py-[1.5rem] py-[0.5rem]  lg:px-7 px-3 bg-white text-black shadow-md">
         <div className="flex justify-between  items-center ">
           <div className="flex gap-4">
-          <div className="drawer md:hidden">
-            <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
-              {/* Page content here */}
-             
-              <label
-                htmlFor="my-drawer"
-                className=" swap swap-rotate bg-transparent border-none text-primary"
-              >
-                {/* this hidden checkbox controls the state */}
-                <input type="checkbox" />
+            <div className="drawer md:hidden">
+              <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+              <div className="drawer-content">
+                {/* Page content here */}
 
-                {/* hamburger icon */}
-                <svg
-                  className="swap-off fill-current "
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 512 512"
+                <label
+                  htmlFor="my-drawer"
+                  className=" swap swap-rotate bg-transparent border-none text-primary"
                 >
-                  <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
-                </svg>
+                  {/* this hidden checkbox controls the state */}
+                  <input type="checkbox" />
 
-                {/* close icon */}
-                <svg
-                  className="swap-on fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 512 512"
-                >
-                  <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
-                </svg>
-              </label>
-            </div>
-            <div className="drawer-side">
-              <label
-                htmlFor="my-drawer"
-                aria-label="close sidebar"
-                className="drawer-overlay"
-              ></label>
-              <Sidebar />
-            
-            </div>
-          </div>
+                  {/* hamburger icon */}
+                  <svg
+                    className="swap-off fill-current "
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 512 512"
+                  >
+                    <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+                  </svg>
 
-          <h1 className="lg:text-3xl text-lg text-[#1C532A] text-shadow font-semibold">
-            Dashboard
-          </h1>
+                  {/* close icon */}
+                  <svg
+                    className="swap-on fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 512 512"
+                  >
+                    <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
+                  </svg>
+                </label>
+              </div>
+              <div className="drawer-side">
+                <label
+                  htmlFor="my-drawer"
+                  aria-label="close sidebar"
+                  className="drawer-overlay"
+                ></label>
+                <Sidebar />
+              </div>
+            </div>
+
+            <h1 className="lg:text-3xl text-lg text-[#1C532A] text-shadow font-semibold">
+              Dashboard
+            </h1>
           </div>
           <div className="flex items-center gap-4">
             <button className="">

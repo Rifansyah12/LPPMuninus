@@ -31,11 +31,13 @@ Route::post('/submit-proposal', [AuthController::class, 'submitProposal']);
 Route::get('/dosen/{NIDN}/category', [AuthController::class, 'getDosenDetailByCategory']);
 Route::resource('pengusulan', AuthController::class);
 // pengusulan
-Route::get('/pengusulan', [PengusulanController::class, 'index']);
-Route::post('/pengusulan', [PengusulanController::class, 'store']);
-Route::get('/pengusulan/{id}', [PengusulanController::class, 'show']);
-Route::put('/pengusulan/{id}', [PengusulanController::class, 'update']);
-Route::delete('/pengusulan/{id}', [PengusulanController::class, 'destroy']);
+// Di dalam routes/web.php
+// Route::get('/pengusulan', [PengusulanController::class, 'index']);
+// Route::post('/pengusulan', [PengusulanController::class, 'store']);
+// Route::get('/pengusulan/{id}', [PengusulanController::class, 'show']);
+// Route::put('/pengusulan/{id}', [PengusulanController::class, 'update']);
+// Route::delete('/pengusulan/{id}', [PengusulanController::class, 'destroy']);
+
 
 // crud_proposal(usulan)
 Route::post('/proposals', [ProposalController::class, 'store']);
