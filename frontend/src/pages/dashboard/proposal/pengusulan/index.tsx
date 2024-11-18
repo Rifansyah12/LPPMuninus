@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import WrapperDashboard from "@/components/WrapperDashboard";
+import Link from "next/link";
 
 export default function TabelPengusulan() {
   const [data, setData] = useState<any[]>([]);
@@ -69,7 +70,13 @@ export default function TabelPengusulan() {
     <WrapperDashboard title="Pengusulan" menu="crud-pengusulan">
       <div className="w-full p-7 bg-white">
         <div className="flex justify-between items-center mb-2">
-          <button className="btn bg-[#1C532A] text-white">Tambah Data</button>
+          <Link
+            href="/dashboard/proposal/new "
+            className="btn bg-[#1C532A] text-white "
+          >
+            Tambah Data
+          </Link>
+
           <button
             className="btn btn-sm bg-red-500 text-white"
             onClick={handleDelete}
