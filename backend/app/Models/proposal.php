@@ -27,11 +27,17 @@ class Proposal extends Model
         'lama_kegiatan',
         'tanggal_mulai',
         'tanggal_selesai',
-        'anggota',
+        'anggota_dosen',
+        'nidn_anggota_dosen',
+        'anggota_mahasiswa',
+        'nim_anggota_mahasiswa',
     ];
 
-    // Jika Anda ingin mendeklarasikan anggota sebagai JSON
+    // Menyatakan kolom yang akan di-cast menjadi tipe data tertentu
     protected $casts = [
-        'anggota' => 'array',
+        'anggota_dosen' => 'array',
+        'nidn_anggota_dosen' => 'array',
+        'anggota_mahasiswa' => 'array',
+        'nim_anggota_mahasiswa' => 'array',
     ];
 }

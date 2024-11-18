@@ -41,30 +41,12 @@ Route::get('/dosen/{NIDN}/category', [AuthController::class, 'getDosenDetailByCa
 // profile
 Route::middleware('auth:sanctum')->get('/profile', [ProfileController::class, 'getProfile']);
 
-// // Route::resource('pengusulan', AuthController::class);
-// // pengusulan
-// Route::get('/pengusulan', [PengusulanController::class, 'index']);
-// Route::post('/pengusulan', [PengusulanController::class, 'store']);
-// Route::get('/pengusulan/{id}', [PengusulanController::class, 'show']);
-// Route::put('/pengusulan/{id}', [PengusulanController::class, 'update']);
-// Route::delete('/pengusulan/{id}', [PengusulanController::class, 'destroy']);
-
-
 // Tabel_pengusulan
-
-
 Route::get('/pengusulan', [TabelPengusulanController::class, 'index']);
 Route::post('/pengusulan', [TabelPengusulanController::class, 'store']);
 Route::get('/pengusulan/{id}', [TabelPengusulanController::class, 'show']);
 Route::put('/pengusulan/{id}', [TabelPengusulanController::class, 'update']);
 Route::delete('/pengusulan/{id}', [TabelPengusulanController::class, 'destroy']);
-
-
-// crud_proposal(usulan)
-// Route::post('/proposals', [ProposalController::class, 'store']);
-// Route::get('/proposals', [ProposalController::class, 'index']);
-// Route::put('/proposals/{id}', [ProposalController::class, 'update']);
-// Route::delete('/proposals/{id}', [ProposalController::class, 'destroy']);
 
 // Riwayat_pendidikan
 Route::middleware('auth:sanctum')->group(function () {
@@ -81,7 +63,18 @@ Route::post('data-riwayat-penelitian', [DataRiwayatPenelitianController::class, 
 Route::get('/rekap/{id}/proposal', [RekapPengusulanController::class, 'detailProposal'])->name('rekap.detailProposal');
 Route::get('/rekap/{id}/tahapan', [RekapPengusulanController::class, 'detailTahapan'])->name('rekap.detailTahapan');
 
+Route::get('/proposals', [ProposalController::class, 'index']);
 
+
+// PROPOSAL
+// Route untuk menyimpan proposal baru
+Route::post('/proposals', [ProposalController::class, 'store']);
+
+// Route untuk mengupdate proposal berdasarkan ID
+Route::put('/proposals/{id}', [ProposalController::class, 'update']);
+
+// Route untuk menghapus proposal berdasarkan ID
+Route::delete('/proposals/{id}', [ProposalController::class, 'destroy']);
 
 
 

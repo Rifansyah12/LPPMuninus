@@ -21,10 +21,13 @@ class ProposalController extends Controller
             'tahun_usulan' => 'required|integer',
             'skema' => 'required|string',
             'tema' => 'required|string',
-            'lama_kegiatan' => 'required|string',
+            'lama_kegiatan' => 'required|string', // Mengubah ke integer jika lama_kegiatan adalah angka
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date',
-            'anggota' => 'required|json',
+            'anggota_dosen' => 'required|array', // Pastikan ini adalah array
+            'nidn_anggota_dosen' => 'required|array', // Pastikan ini adalah array
+            'anggota_mahasiswa' => 'required|array', // Pastikan ini adalah array
+            'nim_anggota_mahasiswa' => 'required|array', // Pastikan ini adalah array
         ]);
 
         Proposal::create($validatedData);
@@ -43,7 +46,22 @@ class ProposalController extends Controller
         $proposal = Proposal::findOrFail($id);
         $validatedData = $request->validate([
             'jenis_penelitian' => 'required|string',
-            // Tambahkan validasi lainnya sesuai kebutuhan
+            'nama_lengkap' => 'required|string',
+            'id_sinta' => 'required|string',
+            'nidn' => 'required|string',
+            'no_handphone' => 'required|string',
+            'judul' => 'required|string',
+            'rumpun_ilmu' => 'required|string',
+            'tahun_usulan' => 'required|integer',
+            'skema' => 'required|string',
+            'tema' => 'required|string',
+            'lama_kegiatan' => 'required|integer', // Pastikan tipe data sesuai
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date',
+            'anggota_dosen' => 'required|json',
+            'nidn_anggota_dosen' => 'required|json',
+            'anggota_mahasiswa' => 'required|json',
+            'nim_anggota_mahasiswa' => 'required|json',
         ]);
 
         $proposal->update($validatedData);
@@ -58,4 +76,3 @@ class ProposalController extends Controller
         return response()->json(['message' => 'Proposal deleted successfully!']);
     }
 }
-
