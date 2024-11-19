@@ -1,7 +1,15 @@
 import { useState } from "react";
 import WrapperDashboard from "@/components/WrapperDashboard";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export default function NewProposal() {
+  const [editorContent, setEditorContent] = useState("");
+
+  const handleEditorChange = (content: string) => {
+    setEditorContent(content); // Perbarui konten editor di state
+  };
+
   const [step, setStep] = useState(1); // State untuk melacak bagian aktif
 
   // Fungsi untuk berpindah ke langkah berikutnya
@@ -17,6 +25,7 @@ export default function NewProposal() {
       setStep(step - 1);
     }
   };
+
   return (
     <WrapperDashboard title="Usulan Baru" menu="usulan-new">
       <div className="w-full p-7 text-primary mt-7">
@@ -37,7 +46,7 @@ export default function NewProposal() {
           <div
             className={`absolute top-1/2 left-1/2 h-1 transform -translate-x-1/2 ${
               step >= 2 ? "bg-yellow-500" : "bg-gray-300"
-            }`} // Garis tetap kuning jika step >= 2
+            }`}
             style={{
               width: "calc(35% - 40px)",
               left: "calc(40% - 20px)",
@@ -51,7 +60,7 @@ export default function NewProposal() {
             <div
               className={`w-10 h-10 flex items-center justify-center rounded-full ${
                 step >= 2 ? "bg-green-600 text-white" : "bg-gray-300"
-              }`} // Ubah menjadi hijau jika step >= 2
+              }`}
             >
               2
             </div>
@@ -64,10 +73,10 @@ export default function NewProposal() {
               step >= 3 ? "bg-yellow-500" : "bg-gray-300"
             }`} // Garis tetap kuning jika step >= 3
             style={{
-              width: "calc(32% - 70px)", // Menyesuaikan lebar garis untuk menghubungkan indikator 2 dan 3
-              left: "calc(70% - 35px)", // Menyesuaikan posisi garis untuk indikator 2 dan 3
-              top: "calc(45% - 5px)", // Menjaga posisi garis agar sejajar dengan garis sebelumnya
-              marginTop: "-3px", // Menjaga agar garis tetap lurus
+              width: "calc(32% - 70px)",
+              left: "calc(70% - 35px)",
+              top: "calc(45% - 5px)",
+              marginTop: "-3px",
             }}
           ></div>
 
@@ -76,7 +85,7 @@ export default function NewProposal() {
             <div
               className={`w-10 h-10 flex items-center justify-center rounded-full ${
                 step >= 3 ? "bg-green-600 text-white" : "bg-gray-300"
-              }`} // Ubah menjadi hijau jika step >= 3
+              }`}
             >
               3
             </div>
@@ -155,19 +164,228 @@ export default function NewProposal() {
 
       {/* Step2 */}
       {step === 2 && (
-        <div>
+        <div className="w-full p-7 text-center text-primary mt-7 bg-white">
           <h2 className="text-2xl font-bold mb-5 text-left">Bagian 2</h2>
           <h2 className="text-2xl font-bold mb-5">Substansi Usulan</h2>
-          <p>Form untuk bagian 2 akan ditambahkan di sini.</p>
+          <form action="" className="space-y-6">
+            {/* WYSIWYG Editor untuk Latar Belakang */}
+            <div className="flex items-start gap-6">
+              <label htmlFor="background" className="w-1/4 text-left">
+                Latar Belakang
+              </label>
+              <div className="w-3/4">
+                <ReactQuill
+                  value={editorContent}
+                  onChange={handleEditorChange}
+                  theme="snow"
+                  className="bg-white text-primary"
+                />
+              </div>
+            </div>
+
+            {/* Input Kata Kunci */}
+            <div className="flex items-center gap-6">
+              <div className="w-3/4">
+                <InputForm label="Kata Kunci" type="text" name="keywords" />
+              </div>
+            </div>
+
+            {/* WYSIWYG Editor untuk Rumusan Masalah */}
+            <div className="flex items-start gap-6">
+              <label htmlFor="problem_statement" className="w-1/4 text-left">
+                Rumusan Masalah
+              </label>
+              <div className="w-3/4">
+                <ReactQuill
+                  value={editorContent}
+                  onChange={handleEditorChange}
+                  theme="snow"
+                  className="bg-white text-primary"
+                />
+              </div>
+            </div>
+
+            {/* Input State Of The Art */}
+            <div className="flex items-start gap-6">
+              <div className="w-3/4">
+                <InputForm
+                  label="State Of The Art"
+                  type="textarea"
+                  name="state_of_the_art"
+                />
+              </div>
+            </div>
+
+            {/* Input Peta Jalan */}
+            <div className="flex items-start gap-6">
+              <div className="w-3/4">
+                <InputForm label="Peta jalan" type="textarea" name="roadmap" />
+              </div>
+            </div>
+
+            {/* Input Metode */}
+            <div className="flex items-start gap-6">
+              <div className="w-3/4">
+                <InputForm label="Metode" type="textarea" name="methodology" />
+              </div>
+            </div>
+
+            {/* Dropdown Kategori */}
+            <div className="flex items-center gap-6">
+              <label htmlFor="output_category" className="w-1/4 text-left">
+                Kategori Luaran
+              </label>
+              <div className="w-1/4">
+                <select
+                  className="select w-full max-w-xs select-sm bg-white text-primary"
+                  name="output_category"
+                >
+                  <option disabled selected>
+                    Pilih
+                  </option>
+                  <option>Buku</option>
+                  <option>Jurnal</option>
+                  <option>Produk</option>
+                </select>
+              </div>
+
+              <label htmlFor="status" className="w-1/4 text-left">
+                Status
+              </label>
+              <div className="w-1/4">
+                <select
+                  className="select w-full max-w-xs select-sm bg-white text-primary"
+                  name="status"
+                >
+                  <option disabled selected>
+                    Pilih
+                  </option>
+                  <option>Terelaksana</option>
+                  <option>Tidak</option>
+                </select>
+              </div>
+            </div>
+          </form>
         </div>
       )}
 
       {/* Step3 */}
       {step === 3 && (
-        <div>
+        <div className="w-full p-7 text-center text-primary mt-7 bg-white">
           <h2 className="text-2xl font-bold mb-5 text-left">Bagian 3</h2>
-          <h2 className="text-2xl font-bold mb-5">Rencana Anggaran Belanja</h2>
-          <p>Form untuk bagian 3 akan ditambahkan di sini.</p>
+          <h2 className="text-2xl font-bold mb-5">
+            Rencana Anggaran Biaya (RAB)
+          </h2>
+          <form action="" className="space-y-6">
+            {/* Latar Belakang dan Komponen */}
+            <div className="flex items-center gap-6">
+              <label htmlFor="background" className="w-1/4 text-left">
+                Latar Belakang
+              </label>
+              <div className="w-1/4">
+                <select
+                  className="select w-full select-sm bg-white text-primary"
+                  name="background"
+                >
+                  <option disabled selected>
+                    Pilih
+                  </option>
+                  <option>Latar Belakang 1</option>
+                  <option>Latar Belakang 2</option>
+                </select>
+              </div>
+
+              <label htmlFor="component" className="w-1/4 text-left">
+                Komponen
+              </label>
+              <div className="w-1/4">
+                <select
+                  className="select w-full select-sm bg-white text-primary"
+                  name="component"
+                >
+                  <option disabled selected>
+                    Pilih
+                  </option>
+                  <option>Komponen 1</option>
+                  <option>Komponen 2</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Satuan dan Volume */}
+            <div className="flex items-center gap-6">
+              <label htmlFor="unit" className="w-1/4 text-left">
+                Satuan
+              </label>
+              <div className="w-1/4">
+                <input
+                  type="text"
+                  name="unit"
+                  className="input w-full input-sm bg-white text-primary border"
+                  placeholder="Masukkan satuan"
+                />
+              </div>
+
+              <label htmlFor="volume" className="w-1/4 text-left">
+                Volume
+              </label>
+              <div className="w-1/4">
+                <input
+                  type="number"
+                  name="volume"
+                  className="input w-full input-sm bg-white text-primary border"
+                  placeholder="Masukkan volume"
+                />
+              </div>
+            </div>
+
+            {/* Item dan Harga Satuan */}
+            <div className="flex items-center gap-6">
+              <label htmlFor="item" className="w-1/4 text-left">
+                Item
+              </label>
+              <div className="w-3/4">
+                <input
+                  type="text"
+                  name="item"
+                  className="input w-full bg-white text-primary border"
+                  placeholder="Masukkan item"
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-6">
+              <label htmlFor="unit_price" className="w-1/4 text-left">
+                Harga Satuan
+              </label>
+              <div className="w-1/4">
+                <input
+                  type="number"
+                  name="unit_price"
+                  className="input w-full input-sm bg-white text-primary border"
+                  placeholder="Rp."
+                />
+              </div>
+            </div>
+
+            {/* Total Anggaran Biaya */}
+            <div className="flex items-center gap-6">
+              <label
+                htmlFor="total_budget"
+                className="w-1/4 text-left font-bold text-lg"
+              >
+                Total Anggaran Biaya
+              </label>
+              <div className="w-1/4">
+                <input
+                  type="text"
+                  name="total_budget"
+                  className="input w-full input-sm bg-gray-200 text-primary border font-bold"
+                  placeholder="Rp."
+                  readOnly
+                />
+              </div>
+            </div>
+          </form>
         </div>
       )}
 
