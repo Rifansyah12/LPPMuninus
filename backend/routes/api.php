@@ -6,9 +6,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\RekapPengusulanController;
 use App\Http\Controllers\RiwayatPendidikanController;
-use App\Http\Controllers\DataRiwayatPenelitianController;
+// use App\Http\Controllers\DataRiwayatPenelitianController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TabelPengusulanController;
+use App\Http\Controllers\DataPenelitianController;
 
 
 /*
@@ -56,8 +57,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 // riwayat penelitian
-Route::get('data-riwayat-penelitian', [DataRiwayatPenelitianController::class, 'index']);
-Route::post('data-riwayat-penelitian', [DataRiwayatPenelitianController::class, 'store']);
+// Route::get('data-riwayat-penelitian', [DataRiwayatPenelitianController::class, 'index']);
+// Route::post('data-riwayat-penelitian', [DataRiwayatPenelitianController::class, 'store']);
 
 // REKAP_PENGUSULAN
 Route::get('/rekap/{id}/proposal', [RekapPengusulanController::class, 'detailProposal'])->name('rekap.detailProposal');
@@ -75,6 +76,17 @@ Route::put('/proposals/{id}', [ProposalController::class, 'update']);
 
 // Route untuk menghapus proposal berdasarkan ID
 Route::delete('/proposals/{id}', [ProposalController::class, 'destroy']);
+
+
+// Data-Penelitian
+
+Route::prefix('data-penelitian')->group(function () {
+    Route::get('/', [DataPenelitianController::class, 'index']); // GET semua data
+    Route::post('/', [DataPenelitianController::class, 'store']); // POST data baru
+    Route::get('/{id}', [DataPenelitianController::class, 'show']); // GET berdasarkan ID
+    Route::put('/{id}', [DataPenelitianController::class, 'update']); // UPDATE berdasarkan ID
+    Route::delete('/{id}', [DataPenelitianController::class, 'destroy']); // DELETE berdasarkan ID
+});
 
 
 

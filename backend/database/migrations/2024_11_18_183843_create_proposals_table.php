@@ -45,4 +45,4 @@ class CreateProposalsTable extends Migration
     {
         Schema::dropIfExists('proposals');
     }
-}
+} 
