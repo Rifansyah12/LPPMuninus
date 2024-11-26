@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Sidebar from "./Sidebar";
+import Link from "next/link";
 
 export default function HeadDashboard({ title }: { title: string }) {
   const [searchValue, setSearchValue] = useState("");
@@ -61,7 +62,7 @@ export default function HeadDashboard({ title }: { title: string }) {
                   aria-label="close sidebar"
                   className="drawer-overlay"
                 ></label>
-                <Sidebar />
+                <Sidebar menu="profile" />
               </div>
             </div>
 
@@ -91,11 +92,13 @@ export default function HeadDashboard({ title }: { title: string }) {
                 search
               </span>
             </div>
-            <button className="">
-              <span className="material-symbols-outlined hover:text-[#FFCC00]">
-                settings
-              </span>
-            </button>
+            <Link href="/Settings">
+              <button className="">
+                <span className="material-symbols-outlined hover:text-[#FFCC00]">
+                  settings
+                </span>
+              </button>
+            </Link>
           </div>
         </div>
       </div>

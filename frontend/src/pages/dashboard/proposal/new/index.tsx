@@ -12,17 +12,100 @@ export default function NewProposal() {
 
   const [step, setStep] = useState(1); // State untuk melacak bagian aktif
 
-  // Fungsi untuk berpindah ke langkah berikutnya
-  const nextStep = () => {
-    if (step < 3) {
-      setStep(step + 1);
-    }
-  };
+  // // Fungsi untuk berpindah ke langkah berikutnya
+  // const nextStep = () => {
+  //   if (step < 3) {
+  //     setStep(step + 1);
+  //   }
+  // };
 
   // Fungsi untuk berpindah ke langkah sebelumnya
   const prevStep = () => {
     if (step > 1) {
       setStep(step - 1);
+    }
+  };
+
+  const validateStep1 = () => {
+    const requiredFields = [
+      "fullname",
+      "id_sinta",
+      "nidn",
+      "phone",
+      "title",
+      "rumpun_ilmu",
+      "year",
+      "scema",
+      "theme",
+      "duration_from",
+      "duration_to",
+      "member_1",
+      "nidn_1",
+      "member_2",
+      "nidn_2",
+    ];
+    for (const field of requiredFields) {
+      const value = (
+        document.querySelector(`[name="${field}"]`) as HTMLInputElement
+      )?.value;
+
+      if (!value || value.trim() === "") {
+        alert(`Field ${field} wajib diisi!`);
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const validateStep2 = () => {
+    const requiredFields = [
+      "keywords",
+      "state_of_the_art",
+      "roadmap",
+      "methodology",
+      "output_category",
+      "status",
+    ];
+    const textEditorContent = editorContent; // Content dari ReactQuill
+    if (!textEditorContent || textEditorContent.trim() === "") {
+      alert("Latar Belakang dan Rumusan Masalah wajib diisi!");
+      return false;
+    }
+    for (const field of requiredFields) {
+      const value = (
+        document.querySelector(`[name="${field}"]`) as HTMLInputElement
+      )?.value;
+
+      if (!value || value.trim() === "") {
+        alert(`Field ${field} wajib diisi!`);
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const validateStep3 = () => {
+    const requiredFields = ["background", "component"];
+    for (const field of requiredFields) {
+      const value = (
+        document.querySelector(`[name="${field}"]`) as HTMLInputElement
+      )?.value;
+
+      if (!value || value.trim() === "") {
+        alert(`Field ${field} wajib diisi!`);
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handleNext = () => {
+    if (step === 1 && validateStep1()) {
+      setStep(2);
+    } else if (step === 2 && validateStep2()) {
+      setStep(3);
+    } else if (step === 3 && validateStep3()) {
+      alert("Semua langkah selesai!");
     }
   };
 
@@ -150,15 +233,85 @@ export default function NewProposal() {
                 </div>
               </div>
               <div className="lg:w-[50%] w-full flex flex-col gap-4 ">
-                <InputForm label="Nama Anggota 1" type="text" name="member_1" />
-                <InputForm label="ID Sinta" type="text" name="id_sinta_1" />
+                <InputForm label="Nama Dosen" type="text" name="member_1" />
                 <InputForm label="NIDN" type="text" name="nidn_1" />
-                <InputForm label="Nama Anggota 2" type="text" name="member_2" />
-                <InputForm label="ID Sinta" type="text" name="id_sinta_2" />
+                <InputForm label="Nama Mahasiswa" type="text" name="member_2" />
                 <InputForm label="NIDN" type="text" name="nidn_2" />
+
+                {/* Tombol Tambah Anggota */}
+                <div className="mt-5 flex flex-row gap-4">
+                  {/* Tombol Tambah Anggota Dosen */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      alert("Fitur tambah dosen diimplementasikan.")
+                    }
+                    className="relative flex items-center h-[30px] w-[233px] bg-transparent group"
+                  >
+                    {/* Rectangle Kiri */}
+                    <div className="absolute left-0 h-[25px] w-[30px] bg-[#1C532A] flex justify-center items-center">
+                      <span className="text-white font-bold text-[20px] leading-[30px]">
+                        +
+                      </span>
+                    </div>
+                    {/* Rectangle Tengah */}
+                    <div className="absolute left-[30px] h-[25px] w-[201px] bg-[#1C532A] flex justify-center items-center">
+                      <span className="text-[#F5F3F3] font-semibold text-[12px] leading-[18px]">
+                        Tambah Anggota Dosen
+                      </span>
+                    </div>
+                  </button>
+
+                  {/* Tombol Tambah Anggota Mahasiswa */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      alert("Fitur tambah mahasiswa diimplementasikan.")
+                    }
+                    className="relative flex items-center h-[30px] w-[233px] bg-transparent group"
+                  >
+                    {/* Rectangle Kiri */}
+                    <div className="absolute left-0 h-[25px] w-[30px] bg-[#1C532A] flex justify-center items-center">
+                      <span className="text-white font-bold text-[20px] leading-[30px]">
+                        +
+                      </span>
+                    </div>
+                    {/* Rectangle Tengah */}
+                    <div className="absolute left-[30px] h-[25px] w-[201px] bg-[#1C532A] flex justify-center items-center">
+                      <span className="text-[#F5F3F3] font-semibold text-[12px] leading-[18px]">
+                        Tambah Anggota Mahasiswa
+                      </span>
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
           </form>
+          <div className="flex justify-between mt-5">
+            {step > 1 && (
+              <button
+                onClick={prevStep}
+                className="bg-[#1C532A] text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition"
+              >
+                Sebelumnya
+              </button>
+            )}
+            {step < 3 ? (
+              <button
+                onClick={handleNext}
+                className="bg-[#1C532A] text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition ml-auto"
+              >
+                Selanjutnya
+              </button>
+            ) : (
+              <button
+                onClick={() => alert("Semua langkah selesai!")}
+                className="bg-[#1C532A] text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition ml-auto"
+              >
+                Selesai
+              </button>
+            )}
+          </div>
         </div>
       )}
 
@@ -266,6 +419,31 @@ export default function NewProposal() {
               </div>
             </div>
           </form>
+          <div className="flex justify-between mt-5">
+            {step > 1 && (
+              <button
+                onClick={prevStep}
+                className="bg-[#1C532A] text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition"
+              >
+                Sebelumnya
+              </button>
+            )}
+            {step < 3 ? (
+              <button
+                onClick={handleNext}
+                className="bg-[#1C532A] text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition ml-auto"
+              >
+                Selanjutnya
+              </button>
+            ) : (
+              <button
+                onClick={() => alert("Semua langkah selesai!")}
+                className="bg-[#1C532A] text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition ml-auto"
+              >
+                Selesai
+              </button>
+            )}
+          </div>
         </div>
       )}
 
@@ -386,33 +564,33 @@ export default function NewProposal() {
               </div>
             </div>
           </form>
+          <div className="flex justify-between mt-5">
+            {step > 1 && (
+              <button
+                onClick={prevStep}
+                className="bg-[#1C532A] text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition"
+              >
+                Sebelumnya
+              </button>
+            )}
+            {step < 3 ? (
+              <button
+                onClick={handleNext}
+                className="bg-[#1C532A] text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition ml-auto"
+              >
+                Selanjutnya
+              </button>
+            ) : (
+              <button
+                onClick={() => alert("Semua langkah selesai!")}
+                className="bg-[#1C532A] text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition ml-auto"
+              >
+                Selesai
+              </button>
+            )}
+          </div>
         </div>
       )}
-
-      {/* Tombol Navigasi */}
-      {/* Tombol Navigasi */}
-      <div className="flex justify-end mt-4">
-        {step > 1 && (
-          <button
-            onClick={prevStep}
-            className="btn bg-gray-400 text-white px-5 py-2"
-          >
-            Sebelumnya
-          </button>
-        )}
-        {step < 3 ? (
-          <button
-            onClick={nextStep}
-            className="btn bg-green-600 text-white px-4 py-2 ml-4" // tambahkan margin kiri agar ada jarak antar tombol
-          >
-            Selanjutnya
-          </button>
-        ) : (
-          <button className="btn bg-blue-600 text-white px-4 py-2 ml-4">
-            Selesai
-          </button>
-        )}
-      </div>
     </WrapperDashboard>
   );
 }

@@ -95,6 +95,9 @@ export default function Profile() {
             {/* Conditional rendering untuk form yang aktif */}
             {activeMenu === "Identitas Diri" && <FormProfile />}
             {activeMenu === "Riwayat Pendidikan" && <EducationHistory />}
+            {activeMenu === "Riwayat Penelitian" && <PenelitianHistory />}
+            {activeMenu === "Riwayat Pengabdian" && <PengabdianHistory />}
+            {activeMenu === "Data Baru" && <DataBaru />}
             {/* Tambahkan komponen lain jika diperlukan */}
           </div>
           <div className="w-full text-center bg-white mt-5 py-2">
@@ -135,10 +138,14 @@ const InputForm = ({
   label,
   type,
   name,
+  placeholder,
+  className,
 }: {
   label: string;
   type: string;
   name: string;
+  placeholder?: string;
+  className?: string;
 }) => {
   return (
     <div className="flex lg:justify-between items-center lg:gap-[6rem]">
@@ -149,7 +156,8 @@ const InputForm = ({
         id={name}
         type={type}
         name={name}
-        className="input bg-[#D9D9D9] text-black min-w-[70%]"
+        placeholder={placeholder}
+        className={`input bg-[#D9D9D9] text-black min-w-[70%] ${className}`}
       />
     </div>
   );
@@ -168,8 +176,18 @@ const FormProfile = () => {
         <button className="btn bg-[#1C532A] text-white">Upload Foto</button>
       </div>
       <div className="flex justify-center flex-col gap-3">
-        <InputForm label="Nama Lengkap" type="text" name="fullname" />
-        <InputForm label="Alamat" type="text" name="address" />
+        <InputForm
+          label="Nama Lengkap"
+          type="text"
+          name="fullname"
+          placeholder="Nama Lengkap"
+        />
+        <InputForm
+          label="Alamat"
+          type="text"
+          name="address"
+          placeholder="Alamat"
+        />
         <div className="flex lg:justify-between items-center lg:gap-[6rem]">
           <label htmlFor="sex" className="label text-lg min-w-[6.5rem] inline">
             Jenis Kelamin
@@ -186,8 +204,18 @@ const FormProfile = () => {
             <option value={"perempuan"}>Perempuan</option>
           </select>
         </div>
-        <InputForm label="Tempat Lahir" type="text" name="place_birth" />
-        <InputForm label="Tanggal Lahir" type="date" name="date_birth" />
+        <InputForm
+          label="Tempat Lahir"
+          type="text"
+          name="place_birth"
+          placeholder="Tempat Lahir"
+        />
+        <InputForm
+          label="Tanggal Lahir"
+          type="date"
+          name="date_birth"
+          placeholder="Tanggal Lahir"
+        />
         <button className="btn bg-[#1C532A] text-white lg:-ml-[5rem] mt-6">
           Simpan
         </button>
@@ -195,27 +223,182 @@ const FormProfile = () => {
     </form>
   );
 };
+// riwayat edu
 
-const EducationHistory = () => {
+const EducationHistory = ({}) => {
   return (
-    <div className="flex w-full bg-white px-2 py-[5rem] gap-[7rem] flex-col items-center justify-center">
-      <form action="" className="w-full">
-        <div className="flex justify-center flex-col gap-3">
-          <InputForm label="Pendidikan S1" type="text" name="educationS1" />
-          <InputForm label="Pendidikan S2" type="text" name="educationS2" />
+    <div className="flex w-full bg-white px-4 py-12 flex-col items-center">
+      {/* Heading */}
+      <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
+        Riwayat Pendidikan
+      </h1>
+
+      {/* Form */}
+      <form
+        action=""
+        style={{ width: "800px" }}
+        className="w-full bg-gray-50 p-6 rounded-lg shadow-md"
+      >
+        <div className="flex flex-col gap-4">
+          {/* Input untuk Pendidikan S1 */}
+          <InputForm
+            label="Pendidikan S1"
+            type="text"
+            name="educationS1"
+            placeholder="Masukkan nama pendidikan S1"
+            className="border-none bg-gray-100 focus:ring-2 focus:ring-blue-500 px-4 py-2 rounded-md"
+          />
+
+          {/* Input untuk Pendidikan S2 */}
+          <InputForm
+            label="Pendidikan S2"
+            type="text"
+            name="educationS2"
+            placeholder="Masukkan nama pendidikan S2"
+            className="border-none bg-gray-100 focus:ring-2 focus:ring-blue-500 px-4 py-2 rounded-md"
+          />
+
+          {/* Input untuk Asal Pendidikan S1 */}
           <InputForm
             label="Asal Pendidikan S1"
             type="text"
             name="originEducationS1"
+            placeholder="Masukkan asal pendidikan S1"
+            className="border-none bg-gray-100 focus:ring-2 focus:ring-blue-500 px-4 py-2 rounded-md"
           />
+
+          {/* Input untuk Asal Pendidikan S2 */}
           <InputForm
             label="Asal Pendidikan S2"
             type="text"
             name="originEducationS2"
+            placeholder="Masukkan asal pendidikan S2"
+            className="border-none bg-gray-100 focus:ring-2 focus:ring-blue-500 px-4 py-2 rounded-md"
           />
-          <button className="btn bg-[#1C532A] text-white mt-6">Simpan</button>
+
+          {/* Tombol Simpan dan Edit */}
+          <div className="flex gap-4 mt-4">
+            <button className="btn bg-[#1C532A] text-white py-2 px-6 rounded-md">
+              Simpan
+            </button>
+            <button className="btn bg-gray-300 text-gray-800 py-2 px-6 rounded-md">
+              Edit
+            </button>
+          </div>
         </div>
       </form>
+    </div>
+  );
+};
+
+// form penelitian
+const PenelitianHistory = () => {
+  return (
+    <div className="flex w-full bg-white px-2 py-[5rem] gap-[7rem] flex-col items-center justify-center">
+      <table className="table-auto w-full border-collapse border border-gray-300">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="border border-gray-300 px-4 py-2">
+              Tempat Penelitian
+            </th>
+            <th className="border border-gray-300 px-4 py-2">
+              Metode Penelitian
+            </th>
+            <th className="border border-gray-300 px-4 py-2">
+              Objek Penelitian
+            </th>
+            <th className="border border-gray-300 px-4 py-2">
+              Judul Penelitian
+            </th>
+            <th className="border border-gray-300 px-4 py-2">Peran</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* Contoh data */}
+          <tr>
+            <td className="border border-gray-300 px-4 py-2">Universitas A</td>
+            <td className="border border-gray-300 px-4 py-2">Kualitatif</td>
+            <td className="border border-gray-300 px-4 py-2">Mahasiswa</td>
+            <td className="border border-gray-300 px-4 py-2">
+              Pengaruh Teknologi
+            </td>
+            <td className="border border-gray-300 px-4 py-2">Peneliti Utama</td>
+          </tr>
+          <tr>
+            <td className="border border-gray-300 px-4 py-2">Universitas B</td>
+            <td className="border border-gray-300 px-4 py-2">Kuantitatif</td>
+            <td className="border border-gray-300 px-4 py-2">Guru</td>
+            <td className="border border-gray-300 px-4 py-2">
+              Studi Kasus Pendidikan
+            </td>
+            <td className="border border-gray-300 px-4 py-2">
+              Asisten Peneliti
+            </td>
+          </tr>
+          {/* Tambahkan baris lain sesuai kebutuhan */}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+//form pengabdian
+const PengabdianHistory = () => {
+  return (
+    <div className="flex w-full bg-white px-2 py-[5rem] gap-[7rem] flex-col items-center justify-center">
+      <table className="table-auto w-full border-collapse border border-gray-300">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="border border-gray-300 px-4 py-2">
+              Tempat Pengabdian
+            </th>
+            <th className="border border-gray-300 px-4 py-2">
+              Metode Pengabdian
+            </th>
+            <th className="border border-gray-300 px-4 py-2">
+              Objek Pengabdian
+            </th>
+            <th className="border border-gray-300 px-4 py-2">
+              Judul Pengabdian
+            </th>
+            <th className="border border-gray-300 px-4 py-2">Peran</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* Contoh data */}
+          <tr>
+            <td className="border border-gray-300 px-4 py-2">Universitas A</td>
+            <td className="border border-gray-300 px-4 py-2">Kualitatif</td>
+            <td className="border border-gray-300 px-4 py-2">Mahasiswa</td>
+            <td className="border border-gray-300 px-4 py-2">
+              Pengaruh Teknologi
+            </td>
+            <td className="border border-gray-300 px-4 py-2">Peneliti Utama</td>
+          </tr>
+          <tr>
+            <td className="border border-gray-300 px-4 py-2">Universitas B</td>
+            <td className="border border-gray-300 px-4 py-2">Kuantitatif</td>
+            <td className="border border-gray-300 px-4 py-2">Guru</td>
+            <td className="border border-gray-300 px-4 py-2">
+              Studi Kasus Pendidikan
+            </td>
+            <td className="border border-gray-300 px-4 py-2">
+              Asisten Peneliti
+            </td>
+          </tr>
+          {/* Tambahkan baris lain sesuai kebutuhan */}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+//data baru
+
+const DataBaru = () => {
+  return (
+    <div className="flex w-full bg-white px-2 py-[5rem] flex-col items-center justify-center">
+      <button className="btn bg-[#1C532A] text-white">Tambah Data</button>
     </div>
   );
 };
