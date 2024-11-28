@@ -110,7 +110,7 @@ export default function NewProposal() {
   };
 
   return (
-    <WrapperDashboard title="Usulan Baru" menu="usulan-new">
+    <WrapperDashboard title="Usulan Baru" menu="Pengusulan">
       <div className="w-full p-7 text-primary mt-7">
         {/* Indikator Langkah */}
         <div className="flex justify-evenly items-center mb-5 relative">

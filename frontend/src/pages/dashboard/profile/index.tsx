@@ -2,10 +2,18 @@ import HeadDashboard from "@/components/HeadDashboard";
 import Sidebar from "@/components/Sidebar";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Profile() {
   const [isMobile, setIsMobile] = useState(false);
   const [activeMenu, setActiveMenu] = useState("Identitas Diri");
+  const [userData, setUserData] = useState({
+    fullname: "",
+    address: "",
+    sex: "",
+    place_birth: "",
+    date_birth: "",
+  });
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768); // Ukuran 768px sesuai dengan breakpoint mobile
@@ -20,6 +28,36 @@ export default function Profile() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+  }, []);
+
+  useEffect(() => {
+    // Fetch user data on component mount
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("token"); // Ambil token dari localStorage
+
+      if (!token) {
+        console.error("Token tidak ditemukan");
+        return;
+      }
+
+      try {
+        const response = await axios.get("https://localhost:8000/dosen", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setUserData({
+          fullname: response.data.fullname,
+          address: response.data.address,
+          sex: response.data.sex,
+          place_birth: response.data.place_birth,
+          date_birth: response.data.date_birth,
+        });
+      } catch (error) {
+        console.error("Gagal memuat data pengguna:", error);
+      }
+    };
+
+    fetchUserData();
   }, []);
 
   return (
@@ -49,7 +87,7 @@ export default function Profile() {
               account_circle
             </span>
             <h2 className="lg:text-2xl font-semibold text-center">
-              Nama Disini
+              {userData.fullname || "Nama Disini"}
             </h2>
             <p className="lg:text-2xl font-semibold text-center">
               Lorem ipsum sit amet dolor consectetur adipiscing elit
@@ -93,7 +131,9 @@ export default function Profile() {
             </div>
 
             {/* Conditional rendering untuk form yang aktif */}
-            {activeMenu === "Identitas Diri" && <FormProfile />}
+            {activeMenu === "Identitas Diri" && (
+              <FormProfile userData={undefined} />
+            )}
             {activeMenu === "Riwayat Pendidikan" && <EducationHistory />}
             {activeMenu === "Riwayat Penelitian" && <PenelitianHistory />}
             {activeMenu === "Riwayat Pengabdian" && <PengabdianHistory />}
@@ -140,12 +180,14 @@ const InputForm = ({
   name,
   placeholder,
   className,
+  value,
 }: {
   label: string;
   type: string;
   name: string;
   placeholder?: string;
   className?: string;
+  value?: string;
 }) => {
   return (
     <div className="flex lg:justify-between items-center lg:gap-[6rem]">
@@ -163,7 +205,8 @@ const InputForm = ({
   );
 };
 
-const FormProfile = () => {
+const FormProfile = ({ userData }: { userData: any }) => {
+  console.log(userData);
   return (
     <form
       action=""
@@ -181,6 +224,8 @@ const FormProfile = () => {
           type="text"
           name="fullname"
           placeholder="Nama Lengkap"
+          className="input bg-[#D9D9D9]"
+          value={userData?.fullname || ""}
         />
         <InputForm
           label="Alamat"

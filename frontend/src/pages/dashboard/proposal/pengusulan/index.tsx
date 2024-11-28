@@ -67,7 +67,7 @@ export default function TabelPengusulan() {
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
   return (
-    <WrapperDashboard title="Pengusulan" menu="crud-pengusulan">
+    <WrapperDashboard title="Pengusulan" menu="Pengusulan">
       <div className="w-full p-7 bg-white">
         <div className="flex justify-between items-center mb-2">
           <Link

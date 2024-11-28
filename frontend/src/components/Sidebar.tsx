@@ -81,7 +81,7 @@ export default function Sidebar({ menu }: SidebarProps) {
             text="Statistik"
             icon="/icon/piechart.png"
             active={menu === "statistik"} // Aktifkan jika menu = "statistik"
-            href={"/dashboard/statistik"}
+            href={"/dashboard/rekap"}
           />
           {/* <ListMenu
             text="Reviewer"
