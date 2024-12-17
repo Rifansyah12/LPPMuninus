@@ -3,17 +3,22 @@ import Sidebar from "@/components/Sidebar";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import EducationHistory from "./pendidikan";
+import PenelitianHistory from "./RiwayatPenelitian";
+import PengabdianHistory from "./RiwayatPengabdian";
+import DataBaru from "./Data";
 
 export default function Profile() {
   const [isMobile, setIsMobile] = useState(false);
   const [activeMenu, setActiveMenu] = useState("Identitas Diri");
   const [userData, setUserData] = useState({
-    fullname: "",
-    address: "",
-    sex: "",
-    place_birth: "",
-    date_birth: "",
+    nama_lengkap: "",
+    alamat: "",
+    jenis_kelamin: "",
+    tempat_lahir: "",
+    tanggal_lahir: "",
   });
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768); // Ukuran 768px sesuai dengan breakpoint mobile
@@ -41,16 +46,23 @@ export default function Profile() {
       }
 
       try {
-        const response = await axios.get("https://localhost:8000/dosen", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        // Mengambil data dosen berdasarkan token
+        const response = await axios.get(
+          "https://localhost:8000/api/dosen/profile",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
+        console.log(response.data);
+
+        // Menyimpan data dosen ke state userData
         setUserData({
-          fullname: response.data.fullname,
-          address: response.data.address,
-          sex: response.data.sex,
-          place_birth: response.data.place_birth,
-          date_birth: response.data.date_birth,
+          nama_lengkap: response.data.nama_lengkap,
+          alamat: response.data.address,
+          jenis_kelamin: response.data.sex,
+          tempat_lahir: response.data.place_birth,
+          tanggal_lahir: response.data.date_birth,
         });
       } catch (error) {
         console.error("Gagal memuat data pengguna:", error);
@@ -87,8 +99,9 @@ export default function Profile() {
               account_circle
             </span>
             <h2 className="lg:text-2xl font-semibold text-center">
-              {userData.fullname || "Nama Disini"}
+              {userData.nama_lengkap ? userData.nama_lengkap : "Nama Disini"}
             </h2>
+
             <p className="lg:text-2xl font-semibold text-center">
               Lorem ipsum sit amet dolor consectetur adipiscing elit
             </p>
@@ -108,7 +121,7 @@ export default function Profile() {
                 active={activeMenu === "Riwayat Pendidikan"}
                 title="Riwayat Pendidikan"
                 icon="school"
-                onClick={() => setActiveMenu("Riwayat Pendidikan")} // Set menu aktif
+                onClick={() => setActiveMenu("Riwayat Pendidikan")}
               />
               <ProfileMenu
                 active={activeMenu === "Riwayat Penelitian"}
@@ -225,7 +238,7 @@ const FormProfile = ({ userData }: { userData: any }) => {
           name="fullname"
           placeholder="Nama Lengkap"
           className="input bg-[#D9D9D9]"
-          value={userData?.fullname || ""}
+          value={userData?.nama_lengkap || ""}
         />
         <InputForm
           label="Alamat"
@@ -268,182 +281,9 @@ const FormProfile = ({ userData }: { userData: any }) => {
     </form>
   );
 };
-// riwayat edu
-
-const EducationHistory = ({}) => {
-  return (
-    <div className="flex w-full bg-white px-4 py-12 flex-col items-center">
-      {/* Heading */}
-      <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
-        Riwayat Pendidikan
-      </h1>
-
-      {/* Form */}
-      <form
-        action=""
-        style={{ width: "800px" }}
-        className="w-full bg-gray-50 p-6 rounded-lg shadow-md"
-      >
-        <div className="flex flex-col gap-4">
-          {/* Input untuk Pendidikan S1 */}
-          <InputForm
-            label="Pendidikan S1"
-            type="text"
-            name="educationS1"
-            placeholder="Masukkan nama pendidikan S1"
-            className="border-none bg-gray-100 focus:ring-2 focus:ring-blue-500 px-4 py-2 rounded-md"
-          />
-
-          {/* Input untuk Pendidikan S2 */}
-          <InputForm
-            label="Pendidikan S2"
-            type="text"
-            name="educationS2"
-            placeholder="Masukkan nama pendidikan S2"
-            className="border-none bg-gray-100 focus:ring-2 focus:ring-blue-500 px-4 py-2 rounded-md"
-          />
-
-          {/* Input untuk Asal Pendidikan S1 */}
-          <InputForm
-            label="Asal Pendidikan S1"
-            type="text"
-            name="originEducationS1"
-            placeholder="Masukkan asal pendidikan S1"
-            className="border-none bg-gray-100 focus:ring-2 focus:ring-blue-500 px-4 py-2 rounded-md"
-          />
-
-          {/* Input untuk Asal Pendidikan S2 */}
-          <InputForm
-            label="Asal Pendidikan S2"
-            type="text"
-            name="originEducationS2"
-            placeholder="Masukkan asal pendidikan S2"
-            className="border-none bg-gray-100 focus:ring-2 focus:ring-blue-500 px-4 py-2 rounded-md"
-          />
-
-          {/* Tombol Simpan dan Edit */}
-          <div className="flex gap-4 mt-4">
-            <button className="btn bg-[#1C532A] text-white py-2 px-6 rounded-md">
-              Simpan
-            </button>
-            <button className="btn bg-gray-300 text-gray-800 py-2 px-6 rounded-md">
-              Edit
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  );
-};
 
 // form penelitian
-const PenelitianHistory = () => {
-  return (
-    <div className="flex w-full bg-white px-2 py-[5rem] gap-[7rem] flex-col items-center justify-center">
-      <table className="table-auto w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2">
-              Tempat Penelitian
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              Metode Penelitian
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              Objek Penelitian
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              Judul Penelitian
-            </th>
-            <th className="border border-gray-300 px-4 py-2">Peran</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* Contoh data */}
-          <tr>
-            <td className="border border-gray-300 px-4 py-2">Universitas A</td>
-            <td className="border border-gray-300 px-4 py-2">Kualitatif</td>
-            <td className="border border-gray-300 px-4 py-2">Mahasiswa</td>
-            <td className="border border-gray-300 px-4 py-2">
-              Pengaruh Teknologi
-            </td>
-            <td className="border border-gray-300 px-4 py-2">Peneliti Utama</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 px-4 py-2">Universitas B</td>
-            <td className="border border-gray-300 px-4 py-2">Kuantitatif</td>
-            <td className="border border-gray-300 px-4 py-2">Guru</td>
-            <td className="border border-gray-300 px-4 py-2">
-              Studi Kasus Pendidikan
-            </td>
-            <td className="border border-gray-300 px-4 py-2">
-              Asisten Peneliti
-            </td>
-          </tr>
-          {/* Tambahkan baris lain sesuai kebutuhan */}
-        </tbody>
-      </table>
-    </div>
-  );
-};
 
 //form pengabdian
-const PengabdianHistory = () => {
-  return (
-    <div className="flex w-full bg-white px-2 py-[5rem] gap-[7rem] flex-col items-center justify-center">
-      <table className="table-auto w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2">
-              Tempat Pengabdian
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              Metode Pengabdian
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              Objek Pengabdian
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              Judul Pengabdian
-            </th>
-            <th className="border border-gray-300 px-4 py-2">Peran</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* Contoh data */}
-          <tr>
-            <td className="border border-gray-300 px-4 py-2">Universitas A</td>
-            <td className="border border-gray-300 px-4 py-2">Kualitatif</td>
-            <td className="border border-gray-300 px-4 py-2">Mahasiswa</td>
-            <td className="border border-gray-300 px-4 py-2">
-              Pengaruh Teknologi
-            </td>
-            <td className="border border-gray-300 px-4 py-2">Peneliti Utama</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 px-4 py-2">Universitas B</td>
-            <td className="border border-gray-300 px-4 py-2">Kuantitatif</td>
-            <td className="border border-gray-300 px-4 py-2">Guru</td>
-            <td className="border border-gray-300 px-4 py-2">
-              Studi Kasus Pendidikan
-            </td>
-            <td className="border border-gray-300 px-4 py-2">
-              Asisten Peneliti
-            </td>
-          </tr>
-          {/* Tambahkan baris lain sesuai kebutuhan */}
-        </tbody>
-      </table>
-    </div>
-  );
-};
 
 //data baru
-
-const DataBaru = () => {
-  return (
-    <div className="flex w-full bg-white px-2 py-[5rem] flex-col items-center justify-center">
-      <button className="btn bg-[#1C532A] text-white">Tambah Data</button>
-    </div>
-  );
-};
